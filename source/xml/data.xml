@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+CityGenerator Data and Templates by Jesse Morgan (morgajel) is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
+Based on a work at https://github.com/morgajel/CityGenerator.
+-->
+
+<data>
+
+<trivia>their official _______ is the ________
+    <fact type='tree'>
+        <title>red</title>
+        <title>blue</title>
+        <title>yellow</title>
+        <title>white</title>
+        <root>pine</root>
+        <root>maple</root>
+        <root>oak</root>
+        <root>cypress</root>
+    </fact>
+    <fact type='animal' title_chance='30'>
+        <title>wild</title>
+        <title>dire</title>
+        <root>bear</root>
+        <root>boar</root>
+        <root>lion</root>
+        <root>ferret</root>
+    </fact>
+    <fact type='stone' title_chance='10'>
+        <title>red</title>
+        <title>white</title>
+        <title>black</title>
+        <title>blue</title>
+        <root>marble</root>
+        <root>bauxite</root>
+        <root>geode</root>
+        <root>limestone</root>
+        <root>agate</root>
+        <root>granite</root>
+        <root>slate</root>
+    </fact>
+    <fact type='beverage' >
+        <root>beer</root>
+        <root>tea</root>
+        <root>coffee</root>
+        <root>wine</root>
+        <root>ale</root>
+    </fact>
+    <fact type='symbol'>
+        <root>bird</root>
+        <root>dragon</root>
+        <root>ram</root>
+        <root>horse</root>
+        <root>tree</root>
+        <root>flower</root>
+    </fact>
+    <fact type='flower'>
+        <root>daisy</root>
+        <root>rose</root>
+        <root>tulip</root>
+    </fact>
+
+    <fact type='bird'>
+        <root></root>
+    </fact>
+
+    <fact type='fish'>
+        <root></root>
+    </fact>
+
+    <fact type='insect'>
+        <root></root>
+    </fact>
+
+</trivia>
+
+<walls chance='40' >
+    <condition>
+        <option          max="10" >destroyed</option>
+        <option min="11" max="20" >crumbling</option>
+        <option min="21" max="25" >poorly maintained</option>
+        <option min="26" max="30" >cracking</option>
+        <option min="31" max="35" >battered</option>
+        <option min="36" max="40" >scarred</option>
+        <option min="41" max="45" >weather-beaten</option>
+        <option min="46" max="50" >flimsy</option>
+        <option min="51" max="60" >solid</option>
+        <option min="61" max="70" >sturdy</option>
+        <option min="71" max="75" >recently repaired</option>
+        <option min="76" max="80" >reinforced</option>
+        <option min="81" max="85" >fortified</option>
+        <option min="86" max="90" >polished</option>
+        <option min="91" max="95" >newly finished</option>
+        <option min="96" max="98" >pristine</option>
+        <option min="99"          >magically reinforced</option>
+    </condition>
+    <material> <!--   height is in meters -->
+        <option          max="10" minheight="1"  maxheight="3"  >rubble</option>
+        <option min="11" max="20" minheight="2"  maxheight="4"  >mud brick</option>
+        <option min="21" max="25" minheight="2"  maxheight="6"  >wood</option>
+        <option min="26" max="30" minheight="3"  maxheight="6"  >oak</option>
+        <option min="31" max="35" minheight="3"  maxheight="10" >brick</option>
+        <option min="36" max="40" minheight="3"  maxheight="15" >sandstone</option>
+        <option min="41" max="45" minheight="3"  maxheight="15" >limestone</option>
+        <option min="46" max="50" minheight="3"  maxheight="15" >conglomerate stone</option>
+        <option min="51" max="60" minheight="3"  maxheight="20" >stone</option>
+        <option min="61" max="70" minheight="3"  maxheight="20" >marble</option>
+        <option min="71" max="75" minheight="3"  maxheight="20" >slate</option>
+        <option min="76" max="80" minheight="3"  maxheight="20" >basalt</option>
+        <option min="81" max="95" minheight="3"  maxheight="20" >granite</option>
+        <option min="96"          minheight="3"  maxheight="22" >Iron</option>
+    </material>
+    <style>
+        <option          max="5"  >embankment</option>
+        <option min="6"  max="10" >fence</option>
+        <option min="11" max="20" >wall</option>
+        <option min="21" max="30" >enclosure</option>
+        <option min="31" max="40" >barrier</option>
+        <option min="41" max="50" >barricade</option>
+        <option min="51" max="60" >fortification</option>
+        <option min="61" max="70" >palisade</option>
+        <option min="71" max="80" >partition</option>
+        <option min="81" max="90" >rampart</option>
+        <option min="91"          >stockade</option>
+    </style>
+</walls>
+<preparation>
+    <option          max='5'>abysmally</option>
+    <option min='6'  max='10'>terribly</option>
+    <option min='11' max='15'>badly</option>
+    <option min='16' max='20'>poorly</option>
+    <option min='21' max='25'>inadequately</option>
+
+    <option min='26' max='35'>tolerably</option>
+    <option min='36' max='45'>suitably</option>
+    <option min='46' max='55'>moderately</option>
+    <option min='56' max='65'>reasonably well</option>
+    <option min='66' max='75'>properly</option>
+
+    <option min='76' max='80'>admirably</option>
+    <option min='81' max='85'>greatly</option>
+    <option min='86' max='90'>excellently</option>
+    <option min='91' max='95'>spectacularly</option>
+    <option min='96'         >perfectly</option>
+</preparation>
+<reputation>
+    <option approval_mod='-5'>hated</option>
+    <option approval_mod='-4'>despised</option>
+    <option approval_mod='-3'>much maligned</option>
+    <option approval_mod='-2'>ridiculed</option>
+    <option approval_mod='-1'>mocked</option>
+    <option approval_mod='2' >much loved</option>
+    <option approval_mod='3' >praised</option>
+    <option approval_mod='4' >respected</option>
+    <option approval_mod='5' >revered</option>
+</reputation>
+<specialties>
+    <specialty>farming</specialty>
+    <specialty>military</specialty>
+    <specialty>mining</specialty>
+    <specialty>logging</specialty>
+</specialties>
+
+
+<tactictypes>
+    <option>rigid formations</option>
+    <option>frenzied fighting</option>
+    <option>phlanyx formations</option>
+    <option>guerrilla warfare</option>
+    <option>hoarde tactics</option>
+</tactictypes>
+
+<weapontypes> <!-- __ fighters are known/renown/mocked for their use of ____ and ____ -->
+    <weapon type="axes" >
+        <option>battle axes</option>
+        <option>hand axes</option>
+        <option>greataxes</option>
+        <option>axes</option>
+        <option>unique axes</option>
+    </weapon>
+    <weapon type="bows">
+        <option>shortbows</option>
+        <option>longbows</option>
+        <option>composite bows</option>
+        <option>bows</option>
+    </weapon>
+    <weapon type="crossbows">
+        <option>heavy crossbows</option>
+        <option>light crossbows</option>
+        <option>repeating crossbows</option>
+        <option>hand crossbows</option>
+        <option>great crossbows</option>
+        <option>crossbows</option>
+    </weapon>
+    <weapon type="flails, maces and clubs">
+        <option>light flail</option>
+        <option>heavy flail</option>
+        <option>light mace</option>
+        <option>heavy mace</option>
+        <option>simple clubs</option>
+        <option>great clubs</option>
+        <option>spiked clubs</option>
+        <option>morningstars</option>
+        <option>flails, maces and clubs</option>
+    </weapon>
+    <weapon type="swords" >
+        <option>longswords</option>
+        <option>curved swords</option>
+        <option>shortswords</option>
+        <option>greatswords</option>
+        <option>bastard swords</option>
+        <option>falchionn</option>
+        <option>scimitars</option>
+        <option>swords</option>
+        <option>rapiers</option>
+        <option>butterfly swords</option>
+    </weapon>
+    <weapon type="">
+        <option>daggers</option>
+        <option>bladed gauntlets</option>
+        <option>claw bracers</option>
+        <option>stump knives</option>
+        <option>tonfas</option>
+    </weapon>
+    <weapon type="throwing">
+        <option>throwing daggers</option>
+        <option>throwing axes</option>
+        <option>throwing hammers</option>
+        <option>thrown weapons</option>
+        <option>slings</option>
+        <option>Javelins</option>
+    </weapon>
+    <weapon type="polearms">
+        <option>glaives</option>
+        <option>guisarmes</option>
+        <option>halberds</option>
+        <option>ranseurs</option>
+    </weapon>
+    <weapon type="spears">
+        <option>short spears</option>
+        <option>long spears</option>
+        <option>tridents</option>
+        <option>harpoons</option>
+        <option>javelins</option>
+    </weapon>
+    <weapon type="unarmed combat">
+        <option>unarmed combat</option>
+        <option>martial arts</option>
+    </weapon>
+</weapontypes>
+
+<locations>
+    <landmarkdesc chance="50">
+        <option>nondescript</option>
+        <option>curious</option>
+    	<option>tiny</option>
+        <option>small</option>
+        <option>large</option>
+        <option>huge</option>
+        <option>massive</option>
+    	<option>gigantic</option>
+    </landmarkdesc>
+    <location description="on the coast" port_chance='100'>
+		<landmarks chance="12">cliff</landmarks>
+		<landmarks chance="10">lighthouse</landmarks>
+		<landmarks chance="10">rivermouth</landmarks>
+		<landmarks chance="20">beach</landmarks>
+		<landmarks chance="10">jagged outcropping of rock</landmarks>
+		<landmarks chance="12">sea cliff</landmarks>
+		<landmarks chance="12">coral reef</landmarks>
+		<landmarks chance="12">barrier island</landmarks>
+    </location>
+    <location description="near a canal" port_chance='90'>
+      <landmarks chance="12">bluff</landmarks>
+      <landmarks chance="12">creek</landmarks>
+      <landmarks chance="12">rapids</landmarks>
+      <landmarks chance="12">marsh</landmarks>
+      <landmarks chance="12">tar pit</landmarks>
+      <landmarks chance="12">lake</landmarks>
+      <landmarks chance="12">valley</landmarks>
+      <landmarks chance="12">swamp</landmarks>
+    </location>
+    <location description="on a cape" port_chance='90'>
+	<landmarks chance="12">beach</landmarks>
+	<landmarks chance="12">bluff</landmarks>
+	<landmarks chance="12">canal</landmarks>
+	<landmarks chance="12">cliff</landmarks>
+	<landmarks chance="12">fjord</landmarks>
+	<landmarks chance="12">sea cliffs</landmarks>
+	<landmarks chance="12">sea cave</landmarks>
+	<landmarks chance="12">volcanic island</landmarks>
+    </location>
+    <location description="near a reservoir" port_chance='60'>
+      <landmarks chance="12">canal</landmarks>
+      <landmarks chance="12">cavern</landmarks>
+      <landmarks chance="12">creek</landmarks>
+      <landmarks chance="12">foothills</landmarks>
+      <landmarks chance="12">mud volcaino</landmarks>
+      <landmarks chance="12">ravine</landmarks>
+      <landmarks chance="12">marsh</landmarks>
+      <landmarks chance="12">waterfall</landmarks>
+    </location>
+    <location description="on a delta" port_chance='900'>
+      <landmarks chance="12">bayou</landmarks>
+      <landmarks chance="12">coastline</landmarks>
+      <landmarks chance="12">continental shelf</landmarks>
+      <landmarks chance="12">salt marsh</landmarks>
+      <landmarks chance="12">sandbar</landmarks>
+      <landmarks chance="12">mud flat</landmarks>
+      <landmarks chance="12">submarine volcano</landmarks>
+    </location>
+    <location description="peninsula" port_chance='90'>
+      <landmarks chance="12">barrier island</landmarks>
+      <landmarks chance="12">coastline</landmarks>
+      <landmarks chance="12">sea cave</landmarks>
+      <landmarks chance="12">sea cliff</landmarks>
+      <landmarks chance="12">tidal basin</landmarks>
+      <landmarks chance="12">wetland</landmarks>
+      <landmarks chance="12">cove</landmarks>
+      <landmarks chance="12">reef</landmarks>
+    </location>
+    <location description="in an oasis" port_chance='0'>
+      <landmarks chance="12">dry lake</landmarks>
+      <landmarks chance="12">sand dunes</landmarks>
+      <landmarks chance="12">foothills</landmarks>
+      <landmarks chance="12">sand hill</landmarks>
+      <landmarks chance="12">ravine</landmarks>
+      <landmarks chance="12">escarpment</landmarks>
+      <landmarks chance="12">dry riverbed</landmarks>
+      <landmarks chance="12">rift valley</landmarks>
+    </location>
+    <location description="near a strait" port_chance='70'>
+      <landmarks chance="12">bluff</landmarks>
+      <landmarks chance="12">tidal basin</landmarks>
+      <landmarks chance="12">flood plain</landmarks>
+      <landmarks chance="12">salt marsh</landmarks>
+      <landmarks chance="12">shallows</landmarks>
+      <landmarks chance="12">surge channel</landmarks>
+      <landmarks chance="12">shoreline</landmarks>
+      <landmarks chance="12">estuary</landmarks>
+    </location>
+    <location description="in a valley" port_chance='10'>
+      <landmarks chance="12">cave</landmarks>
+      <landmarks chance="12">cliff</landmarks>
+      <landmarks chance="12">crag</landmarks>
+      <landmarks chance="12">falls</landmarks>
+      <landmarks chance="12">mud flat</landmarks>
+      <landmarks chance="12">lake</landmarks>
+      <landmarks chance="12">marsh</landmarks>
+      <landmarks chance="12">tar pit</landmarks>
+    </location>
+    <location description="near a wetland" port_chance='10'>
+      <landmarks chance="12">box canyon</landmarks>
+      <landmarks chance="12">creek</landmarks>
+      <landmarks chance="12">mud flat</landmarks>
+      <landmarks chance="12">swamp</landmarks>
+      <landmarks chance="12">spring</landmarks>
+      <landmarks chance="12">tar pit</landmarks>
+      <landmarks chance="12">prairie</landmarks>
+      <landmarks chance="12">marsh</landmarks>
+    </location>
+    <location description="on an archipelago" port_chance='100'>
+      <landmarks chance="12">caldera</landmarks>
+      <landmarks chance="12">atoll</landmarks>
+      <landmarks chance="12">beach</landmarks>
+      <landmarks chance="12">oceanic trench</landmarks>
+      <landmarks chance="12">sea cave</landmarks>
+      <landmarks chance="12">sea cliff</landmarks>
+      <landmarks chance="12">submarine volcano</landmarks>
+      <landmarks chance="12">volcanic island</landmarks>
+    </location>
+    <location description="near a river" port_chance='50'>
+        <landmarks chance="10">marsh</landmarks>
+        <landmarks chance="12">stream</landmarks>
+	<landmarks chance="12">rapids</landmarks>
+	<landmarks chance="12">waterfall</landmarks>
+	<landmarks chance="12">spring</landmarks>
+	<landmarks chance="12">river delta</landmarks>
+	<landmarks chance="12">cliffs</landmarks>
+	<landmarks chance="12">foothills</landmarks>
+    </location>
+    <location description="on a hill" port_chance='25'>
+        <landmarks chance="22">rocky outcropping</landmarks>
+        <landmarks chance="10">stand of trees</landmarks>
+        <landmarks chance="10">river</landmarks>
+        <landmarks chance="10">pond</landmarks>
+        <landmarks chance="10">lake</landmarks>
+        <landmarks chance="12">pass</landmarks>
+	<landmarks chance="12">overhang</landmarks>
+        <landmarks chance="10">crossroad</landmarks>
+        <landmarks chance="10">mountain range</landmarks>
+    </location>
+    <location description="in a basin" port_chance='5'>
+        <landmarks chance="10">stream</landmarks>
+        <landmarks chance="10">river</landmarks>
+        <landmarks chance="10">puddle</landmarks>
+        <landmarks chance="10">lake</landmarks>
+        <landmarks chance="10">cliff</landmarks>
+        <landmarks chance="10">boulder</landmarks>
+        <landmarks chance="10">mud flat</landmarks>
+	<landmarks chance="12">swamp</landmarks>
+    </location>
+    <location description="on a plateau" port_chance='0'>
+        <landmarks chance="10">cliff</landmarks>
+        <landmarks chance="20">jagged cliff</landmarks>
+	<landmarks chance="12">butte</landmarks>
+	<landmarks chance="12">dead volcano</landmarks>
+	<landmarks chance="12">scree</landmarks>
+	<landmarks chance="12">rocks</landmarks>
+	<landmarks chance="12">overhang</landmarks>
+	<landmarks chance="12">natural arch</landmarks>
+    </location>
+    <location description="in the mountains" port_chance='0'>
+	<landmarks chance="12">cataract</landmarks>
+        <landmarks chance="10">summit</landmarks>
+        <landmarks chance="10">lava dome</landmarks>
+	<landmarks chance="12">crevasse</landmarks>
+	<landmarks chance="12">chasm</landmarks>
+	<landmarks chance="12">cave</landmarks>
+	<landmarks chance="12">mountain pass</landmarks>
+	<landmarks chance="12">slope</landmarks>
+    </location>
+    <location description="underground" port_chance='0'>
+        <landmarks chance="10">underground lake</landmarks>
+        <landmarks chance="10">waterfall</landmarks>
+        <landmarks chance="10">stream</landmarks>
+        <landmarks chance="10">lava pit</landmarks>
+        <landmarks chance="10">cavern</landmarks>
+        <landmarks chance="10">gysers</landmarks>
+        <landmarks chance="10">faultline</landmarks>
+	<landmarks chance="12">lava tube</landmarks>
+    </location>
+    <location description="in the plains" port_chance='10'>
+	<landmarks chance="12">badlands</landmarks>
+	<landmarks chance="12">box canyon</landmarks>
+        <landmarks chance="12">butte</landmarks>
+        <landmarks chance="10">forest</landmarks>
+        <landmarks chance="12">mud volcaino</landmarks>
+        <landmarks chance="10">bog</landmarks>
+        <landmarks chance="10">swamp</landmarks>
+        <landmarks chance="12">geyser</landmarks>
+    </location>
+    <location description="in the desert" port_chance='0'>
+        <landmarks chance="10">wonderful oasis</landmarks>
+        <landmarks chance="10">sea of sand dunes</landmarks>
+        <landmarks chance="10">gysers</landmarks>
+        <landmarks chance="10">stone formation</landmarks>
+	<landmarks chance="12">ridge</landmarks>
+	<landmarks chance="12">natural arch</landmarks>
+	<landmarks chance="12">foothills</landmarks>
+	<landmarks chance="12">fissure</landmarks>
+    </location>
+    <location description="in the forest" port_chance='5'>
+        <landmarks chance="10">lake</landmarks>
+	<landmarks chance="12">cavern</landmarks>
+	<landmarks chance="12">gully</landmarks>
+        <landmarks chance="10">sequoia grove</landmarks>
+        <landmarks chance="10">rocky outcropping</landmarks>
+        <landmarks chance="10">caves</landmarks>
+        <landmarks chance="10">clearing</landmarks>
+	<landmarks chance="12">moraine</landmarks>
+    </location>
+    <location description="in the badlands" port_chance='5'>
+        <landmarks chance="12">box canyon</landmarks>
+	<landmarks chance="12">lava flow</landmarks>
+	<landmarks chance="12">mud flat</landmarks>
+	<landmarks chance="12">volcano</landmarks>
+	<landmarks chance="12">swamp</landmarks>
+	<landmarks chance="12">escarpment</landmarks>
+	<landmarks chance="12">tar pit</landmarks>
+	<landmarks chance="12">mesa</landmarks>
+    </location>
+    <location description="in the tundra" port_chance='5'>
+        <landmarks chance="12">mountain range</landmarks>
+	<landmarks chance="12">crater lake</landmarks>
+	<landmarks chance="12">crevasse</landmarks>
+	<landmarks chance="12">geyser</landmarks>
+	<landmarks chance="12">moraine</landmarks>
+	<landmarks chance="12">gully</landmarks>
+	<landmarks chance="12">rivulet</landmarks>
+	<landmarks chance="12">fissure</landmarks>
+    </location>
+</locations>
+
+<direction>
+    <option>northwest</option>
+    <option>north</option>
+    <option>northeast</option>
+    <option>east</option>
+    <option>southeast</option>
+    <option>south</option>
+    <option>southwest</option>
+    <option>south</option>
+</direction>
+
+<condition>
+    <option>neat</option>
+    <option>tidy</option>
+    <option>messy</option>
+    <option>crowded</option>
+    <option>dirty</option>
+    <option>clean</option>
+    <option>packed</option>
+    <option>orderly</option>
+    <option>dusty</option>
+    <option>cluttered</option>
+    <option>damp</option>
+    <option>smelly</option>
+    <option>disgusting</option>
+    <option>filthy</option>
+</condition>
+
+<laws>
+    <enforcer> <!-- The ________ ... -->
+        <option>grifters</option>    
+        <option>city guard</option>
+        <option>city watch</option>
+        <option>neighborhood watch</option>
+        <option>crime mobs</option>
+        <option>police</option>
+        <option>local thugs</option>
+        <option>organized crime bosses</option>
+        <option>local gangs</option>
+        <option>roving thieves</option>
+        <option>racketeers</option>
+        <option>mobsters</option>
+        <option>trade guild</option>
+    </enforcer>
+    <graft>
+        <option>shakes down</option>
+        <option>gives protection to</option>
+        <option>hit up</option>
+        <option>steals from</option>
+        <option>taxes</option>
+        <option>harass</option>
+    </graft>
+    <enforcement>
+        <option>but are loosely enforced</option>
+        <option>and are strictly enforced</option>
+        <option>but are rarely enforced</option>
+        <option>who can be bribed</option>
+    </enforcement>
+    <punishment>
+        <option>fines</option>
+        <option>community service</option>
+        <option>an eye for an eye</option>
+        <option>hard labor</option>
+        <option>stoning</option>
+        <option>torture</option>
+        <option>execution</option>
+        <option>maiming</option>
+        <option>indentured servitude</option>
+    </punishment>
+    <commoncrime>
+        <option>petty theft</option>
+        <option>fraud</option>
+        <option>murder</option>
+        <option>domestic disturbance</option>
+        <option>treason</option>
+    </commoncrime>
+    <trial>
+        <option>without trial</option>
+        <option>by a kangaroo court</option>
+        <option>by a magistrate</option>
+        <option>by a council</option>
+        <option>by jurors</option>
+        <option>by mob rule</option>
+    </trial>
+</laws>
+
+<markets>
+    <option type="guild" chance="62" marketname="Thieves" secret="100">
+        <option>good</option>
+        <option>neutral</option>
+        <option>evil</option>
+    </option>
+    <option type="guild" chance="30" marketname="Mages" secret="10">
+        <option>powerhungry</option>
+        <option>good</option>
+        <option>neutral</option>
+        <option>evil</option>
+        <option>chaotic</option>
+    </option>
+    <option type="guild" chance="10" marketname="Assassins" secret="100">
+        <option>neutral</option>
+        <option>evil</option>
+    </option>
+    <option type="guild" chance="30" marketname="Adventurers" secret="50">
+        <option>good</option>
+        <option>neutral</option>
+        <option>evil</option>
+    </option>
+    <option type="cult"  chance="20" marketname="evil" secret="80">
+        <option>Death worshiping</option>
+        <option>Dragon worshiping</option>
+        <option>Undead worshiping</option>
+        <option>God worshiping</option>
+        <option>Beast worshiping</option>
+    </option>
+    <option type="cult"  chance="10" marketname="chaotic" secret="90">
+        <option>Violence worshiping</option>
+        <option>Chaos worshiping</option>
+        <option>God worshiping</option>
+    </option>
+    <option type="cult"  chance="10" marketname="good" secret="80">
+        <option>god worshiping</option>
+        <option>dragon worshiping</option>
+    </option>
+    <option type="trade" chance="30" marketname="magic items" secret="60">
+        <option>powerful</option>
+        <option>dangerous</option>
+        <option>evil</option>
+        <option>intelligent</option>
+        <option>expensive</option>
+        <option>trinkets</option>
+    </option>
+    <option type="trade" chance="20" marketname="slaves" secret="70">
+        <option>sex</option>
+        <option>labor</option>
+        <option>gladiator</option>
+    </option>
+    <option type="trade" chance="40" marketname="food" secret="10">
+        <option>rare</option>
+        <option>spices</option>
+    </option>
+    <option type="trade" chance="40" marketname="gem" secret="20">
+        <option>money laundering</option>
+        <option>stolen goods</option>
+        <option>magical components</option>
+    </option>
+    <option type="trade" chance="40" marketname="art" secret="100">
+        <option>stolen</option>
+        <option>rare</option>
+    </option>
+</markets>
+
+
+
+<!--  ###########################################################################  -->
+<!--  ###########################################################################  -->
+<!--  ###########################################################################  -->
+
+
+<arable_description>
+    <option type="poor" min='1' max='33'>
+        <option>desolate</option>
+
+    </option>
+    <option type="neutral" min='34' max='66'>
+        <option>modest</option>
+
+    </option>
+    <option type="rich" min='67' >
+        <option>fertile</option>
+    </option>
+</arable_description>
+
+
+<neighbor>
+    <relation>has a neutral relationship with</relation>
+    <relation>has strained relations with</relation>
+    <relation>is wary of </relation>
+    <relation>is cautious of</relation>
+    <relation>is in a trade war with</relation>
+    <relation>is watchful of</relation>
+    <relation>is distrustful of</relation>
+    <relation>is cordial towards </relation>
+    <relation>is friendly with</relation>
+    <relation>is at war with</relation>
+    <relation>is on the verge of war with</relation>
+    <relation>is embargoing</relation>
+    <relation>is allied with</relation>
+    <relation>is ready for war with</relation>
+    <relation>is oblivious of</relation>
+</neighbor>
+<scope>
+    <option>the neighborhood</option>
+    <option>that part of town</option>
+    <option>the city</option>
+    <option>the region</option>
+    <option>the world</option>
+</scope>
+<classes>
+    <class name="Commoner"   min="0"  max="23" max_level="4d4" />
+    <class name="Expert"     min="24" max="35" max_level="3d4" />
+    <class name="Warrior"    min="36" max="43" max_level="2d4" />
+    <class name="Rogue"      min="44" max="49" max_level="1d8" />
+    <class name="Barbarian"  min="50" max="52" max_level="1d4" />
+    <class name="Monk"       min="53" max="55" max_level="1d4" />
+    <class name="Bard"       min="56" max="59" max_level="1d6" />
+    <class name="Cleric"     min="60" max="65" max_level="1d6" />
+    <class name="Druid"      min="66" max="69" max_level="1d6" />
+    <class name="Fighter"    min="70" max="77" max_level="1d8" />
+    <class name="Adept"      min="78" max="83" max_level="1d6" />
+    <class name="Sorcerer"   min="84" max="87" max_level="1d4" />
+    <class name="Wizard"     min="88" max="91" max_level="1d4" />
+    <class name="Aristocrat" min="92" max="95" max_level="1d4" />
+    <class name="Paladin"    min="96" max="97" max_level="1d3" />
+    <class name="Ranger"     min="99" max="99" max_level="1d3" />
+</classes>
+
+<dominance chance='30'>
+    <option          max="20" >snobbish</option>
+    <option min="21" max="40" >mean</option>
+    <option min="41" max="60" >cruel</option>
+    <option min="61" max="80" >very oppressive</option>
+    <option min="81"          >brutally oppressive</option>
+</dominance>
+<housing>
+    <quality name="poor"    percent="30" density="15"/>
+    <quality name="average" percent="68" density="7"/>
+    <quality name="wealthy" percent="2"  density="5"/>
+
+<!-- quality descriptors: dilapidated, poor, ramshackle, etc -->
+
+
+    <house_type type="small hut" value="5gp" max="5" />
+    <house_type type="medium hut" value="9gp" max="10" />
+    <house_type type="large hut" value="12gp" max="15" />
+    <house_type type="small house" value="20gp" max="6" />
+    <house_type type="medium house" value="40gp" max="8" />
+    <house_type type="large house" value="60gp" max="12" />
+</housing>
+
+</data>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+CityGenerator Data and Templates by Jesse Morgan (morgajel) is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
+Based on a work at https://github.com/morgajel/CityGenerator.
+-->
+
+<data>
+    <linetype>Nebuly Line</linetype>
+    <linetype>Wavy Line</linetype>
+    <linetype>Embattled Line</linetype>
+    <linetype>Engrailed Line</linetype>
+    <linetype>Invecked Line</linetype>
+    <linetype>Indented Line</linetype>
+    <shield>Chief</shield>
+    <shield>Pale</shield>
+    <shield>Bend</shield>
+    <shield>Fess</shield>
+    <shield>Chevron</shield>
+    <shield>Cross</shield>
+    <shield>Saltire</shield>
+    <shield>Pile</shield>
+    <shield>Canton</shield>
+    <shield>Bordure</shield>
+    <animal>Lion</animal>
+    <animal>Tiger</animal>
+    <animal>Fish</animal>
+    <animal>Bear</animal>
+    <animal>Wolf</animal>
+    <animal>Leopard</animal>
+    <animal>Horse</animal>
+    <animal>Bull</animal>
+    <animal>Boar</animal>
+    <animal>Boars</animal>
+    <animal>Conies</animal>
+    <animal>Fox</animal>
+    <animal>Dog</animal>
+    <animal>Dolphin</animal>
+    <animal>Tortoise</animal>
+    <animal>Griffin</animal>
+    <animal>Dragon</animal>
+    <animal>Stag</animal>
+    <animal>Snake</animal>
+
+</data>

@@ -1,0 +1,25 @@
+RedirectMatch 404 /\\.git(/.*|.*|$)
+DirectoryIndex citygenerator
+<Files ~ "^.*generator" >
+	Order allow,deny
+	Options +ExecCGI
+	Allow from all
+	SetHandler cgi-script
+	Satisfy All
+</Files>
+<Files ~ "^.*worldmap*" >
+	Order allow,deny
+	Options +ExecCGI
+	Allow from all
+	SetHandler cgi-script
+	Satisfy All
+</Files>
+<Files ~ "^.*regionmap" >
+	Order allow,deny
+	Options +ExecCGI
+	Allow from all
+	SetHandler cgi-script
+	Satisfy All
+</Files>
+
+

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Article">
+    <head>
+      <meta property="og:url">
+      <meta content="Dungeon Master&apos;s Vault: [%doctitle%]" property="og:title">
+      <meta content="Dungeons &amp; Dragons 5th Edition (D&amp;D 5e) character builder/generator and digital character sheet far beyond any other in the multiverse." property="og:description">
+      <meta content="/image/orcpub-box-logo.png" property="og:image">
+      <meta charset="UTF-8"><meta content="width=device-width, initial-scale=1" name="viewport">
+      <title itemprop="name">Dungeon Master&apos;s Vault: [%doctitle%]</title>
+      <meta charset="utf-8" />
+      
+      <link href='css/style.css' type='text/css' rel='stylesheet'/>
+      <script src='js/flag.js' ></script>
+      <script src='js/rhill-voronoi-core.js' ></script>
+      <script src='js/simplex-noise.js' ></script>
+      <script src='js/map.js' ></script>
+      <script src='js/VoronoiMap.js' ></script>
+      <script src='js/CityMap.js' ></script>
+      <script src='js/WorldMap.js' ></script>
+      <script src='js/misc.js' ></script>
+      <script src="js/jquery-2.0.2.min.js"></script>
+      <link rel="stylesheet" href="css/font-awesome.min.css">
+      <script type="text/javascript">
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+          var u="//t.lissproductions.com/";
+          _paq.push(['setTrackerUrl', u+'matomo.php']);
+          _paq.push(['setSiteId', '7']);
+          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+          g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+      </script>
+      <noscript><p><img src="//t.lissproductions.com/matomo.php?idsite=7&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+    </head>
+    <body onload='[% onload %]'>
+    <div id="page">
+    <div id="page_border_left">
+    <div id="page_border_right">
+    <div id="page_center">
+          <a href="#" id="globalmenubutton" onclick="toggleGlobalMenu();" >More Generators</a>
+        <div id="globalmenudrawer">
+            <nav>
+              <ul>
+                <!-- <li><a href="worldgenerator">World Generator</a></li> -->
+                <li><a href="citygenerator">City</a></li>
+                <li><a href="namegenerator">Names</a></li>
+                <li><a href="legendgenerator">Legends - That reminds me of a story...</a></li>
+                <li><a href="rumorgenerator">Rumors - PSST, Did You hear?</a></li>
+                <li><a href="bondgenerator">Bonds - The Ties That Bind Us...</a></li>
+                <li><a href="flaggenerator">Flags</a></li>
+                <li><a href="postinggenerator">HELP WANTED! - Job Board</a></li>
+                <li><a href="magicitemgenerator">Behold a Magic Item</a></li>
+                <li><a href="customcitygenerator">Custom City</a></li>
+                <li><a href="deitygenerator">Deity - Tremble Before...</a></li>
+                <li><a href="cuisinegenerator">Cuisines of the region</a></li>
+                <li><a href="npcgenerator">NPC Generator</a></li>
+                <li><a href="resourcegenerator">So you're looking for...</a></li>
+                <li><a href="wantedpostergenerator">Wanted dead or alive Poster</a></li>
+                <li><a href="crittergenerator">Beware of the Critters</a></li>
+                <li><a href="/">Return to DMV</a></li>
+              </ul>
+            </nav>
+        </div>
+[% worldnav %]
+		<br style="clear:right"/>
+        <header class="title">
+                <div id="logo">[% logo %]</div>
+                <h1>[% title %]</h1>
+                <br style="clear:left"/>
+        </header>
+
+         <div id="content">
+[% content %]
+		</div>
+        <footer>
+              <hr/>
+				      <sub>[% worldnav %]</br>
+              The purpose is to give a DM a seed for building their own ideas. If things don't make sense, ask the single most important question you can: Why? Try to figure out the conditions that lead to that state. The interesting backstory comes from the DM exercising their imagination.</br>
+              Based on the awesome works of https://github.com/morgajel/CityGenerator : ]]</br>
+              v1.0.0.1 "Exploding Sword" Build 1/1/2020
+              </sub>
+        </footer>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

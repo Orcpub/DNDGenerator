@@ -1,0 +1,144 @@
+#!/usr/bin/perl -wT
+
+use strict;
+use CGI;
+use Data::Dumper;
+use JSON;
+use List::Util 'shuffle', 'min', 'max' ;
+use POSIX;
+use Template;
+use XML::Simple;
+use lib "lib/";
+use GenericGenerator;
+use CityGenerator;
+use FlagGenerator;
+our $q = CGI->new;
+
+
+my $testcityid=GenericGenerator::set_seed();
+if (defined $q->param('seed')){
+    $testcityid=$q->param('seed');
+}elsif (defined $q->param('cityid')){
+    $testcityid=$q->param('cityid');
+}elsif (defined $q->param('continent')){
+    $testcityid=$q->param('continent').'00';
+}elsif (defined $q->param('region')){
+    $testcityid=$q->param('region').'0';
+}
+
+
+
+    my $flag=FlagGenerator::create({seed=>$testcityid});
+    # FlagGenerator::flesh_out_flag($flag);
+
+if (defined $q->param('type') and $q->param('type') eq 'xml' ){
+    print $q->header( 'text/xml' );
+    print "<?xml version='1.0'  encoding='ISO-8859-1' ?>\n";
+    print XMLout($flag);
+}elsif (defined $q->param('type') and $q->param('type') eq 'json' ){
+    print $q->header( 'application/json' );
+    my $JSON  = JSON->new->utf8;
+    $JSON->convert_blessed(1);
+    print  $JSON->encode($flag);
+
+}elsif (defined $q->param('type') and $q->param('type') eq 'dump' ){
+    print $q->header( 'text/plain' );
+    print Dumper $flag;
+}else {
+    print $q->header;
+    print print_page($flag);
+}
+
+exit;
+
+#################################################################################################
+#################################################################################################
+#################################################################################################
+
+sub print_page {
+    my ($flag)=@_;
+
+    my $templates = Template->new({
+        INCLUDE_PATH => 'Templates/',
+        INTERPOLATE  => 1,
+    }) || die "$Template::ERROR\n";
+    my $JSON  = JSON->new->utf8;
+    $JSON->convert_blessed(1);
+    my $json=$JSON->encode($flag);
+    my $vars = {
+        'doctitle'         => 'Flag Generator - Flag '.$flag->{'seed'}."!",
+        'title'         => 'Flag '.$flag->{'seed'}."!",
+
+        'seed'          => $flag->{'seed'},
+        'onload'        => "create_flag( $json,  \"flag\");",
+        'content'       => print_content($flag),
+        'worldnav'      => print_worldnav($flag),
+    };
+    $templates->process('base.tmpl', $vars) || die $templates->error(), "\n";
+}
+
+sub print_worldnav {
+    my ($flag)=@_;
+
+    my $templates = Template->new({
+        INCLUDE_PATH => 'Templates/',
+        INTERPOLATE  => 1,
+    }) || die "$Template::ERROR\n";
+
+    my $formtmpl;
+    my $vars = {
+        'cityname'      => $flag->{'seed'},
+        'seed'          => $flag->{'seed'},
+    };
+    $templates->process('worldnav.tmpl', $vars, \$formtmpl) || die $templates->error(), "\n";
+
+    return $formtmpl;
+}
+
+
+
+sub print_content {
+    my ($flag)=@_;
+
+    my $templates = Template->new({
+        INCLUDE_PATH => 'Templates/',
+        INTERPOLATE  => 1,
+    }) || die "$Template::ERROR\n";
+
+    my $formtmpl;
+    my $vars = {
+        'seed'          => $flag->{'seed'},
+    };
+    $templates->process('flag.tmpl', $vars, \$formtmpl) || die $templates->error(), "\n";
+
+    return $formtmpl;
+}
+
+__END__
+
+
+=head1 AUTHOR
+
+Jesse Morgan (morgajel)  C<< <morgajel@gmail.com> >>
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (c) 2013, Jesse Morgan (morgajel) C<< <morgajel@gmail.com> >>. All rights reserved.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation version 2
+of the License.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+=head1 DISCLAIMER OF WARRANTY
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+=cut

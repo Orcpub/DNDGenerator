@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+CityGenerator Data and Templates by Jesse Morgan (morgajel) is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
+Based on a work at https://github.com/morgajel/CityGenerator.
+-->
+
+<data>
+    <scarcity> 
+        <option          max="3"  >rare</option>
+        <option min="4"  max="6"  >endangered</option>
+        <option min="7"  max="14" >paltry</option>
+        <option min="15" max="18" >scarce</option>
+        <option min="19" max="22" >scant</option>
+        <option min="23" max="34" >abundant</option>
+        <option min="35" max="46" >substantial</option>
+        <option min="47" max="55" >magical</option>
+        <option min="56" max="67" >many</option>
+        <option min="68" max="79" >plentiful</option>
+        <option min="80" max="83" >rich</option>
+        <option min="84" max="87" >bountiful</option>
+        <option min="88" max="93" >vast</option>
+        <option min="94" max="96" >huge</option>
+        <option min="97"          >unlimited</option>
+    </scarcity>
+    <groups> 
+        <option>townspeople</option>
+        <option>travelers</option>
+        <option>zombies</option>
+        <option>gru</option>
+        <option>children</option>
+        <option>kittens</option>
+        <option>vampires</option>
+        <option>wenches</option>
+        <option>locals</option>
+        <option>unicorns</option>
+        <option>magic users</option>
+        <option>locals</option>
+        <option>witches</option>
+    </groups>
+    <feelings> 
+        <option>frequented</option>
+        <option>avoided</option>
+        <option>hunted</option>
+        <option>feared</option>
+        <option>visited frequently</option>
+    </feelings>
+    <ravished>
+        <type>guarded by</type>
+        <type>protected by</type>
+        <type>ravished by</type>
+        <type>wrecked by</type>
+        <type>surrounded by</type>
+        <option>a curse</option>
+        <option>a spell</option>
+        <option>a strange fungus</option>
+        <option>draught</option>
+        <option>fire</option>
+        <option>nasty insects</option>
+        <option>forces of nature</option>
+        <option>high wind</option>
+        <option>nomadic dragons</option>
+        <option>roving bands of brigands</option>
+        <option>strange weather</option>
+        <option>the effects of battle</option>
+        <option>the effects of magic</option>
+        <option>the effects of time</option>
+        <option>the undead</option>
+        <option>vipers</option>
+    </ravished>
+    <precious>
+        <find>one might find</find>
+        <find>the locals speak of</find>
+        <find>one might dig up</find>
+        <find>rumors tell of</find>
+        <find>somoeone said someone found</find>
+        <type>a stash of</type>
+        <type>piles of</type>
+        <type>a chest containing</type>
+        <type>bags of</type>
+        <option>iron maidens</option>
+        <option>kitten mittens</option>
+        <option>monkey wrenches</option>
+        <option>small lyres</option>
+        <option>penis sheathes</option>
+        <option>copper</option>
+        <option>gold</option>
+        <option>silver</option>
+        <option>platinum</option>
+        <option>diamonds</option>
+        <option>emeralds</option>
+        <option>rubies</option>
+        <option>saphires</option>
+        <post>buried near there</post>
+        <post>hidden around somewhere</post>
+        <post>in a tomb nearby</post>
+        <post>in a nearby pit</post>
+        <post>in a well</post>        
+        <post>in a dungeon</post>
+     </precious>
+    <structures>
+        <age>
+            <option>an ancient</option>
+            <option>an old</option>
+            <option>a new</option>
+            <option>a magical</option>
+            <option>a haunted</option>
+            <option>a creepy</option>
+            <option>a cursed</option>
+            <option>a blessed</option>
+        </age>
+        <option>battle field</option>
+        <option>cave</option>
+        <option>mine</option>
+        <option>shrine</option>
+        <option>castle</option>
+        <option>gazebo</option>
+        <option>fort</option>
+        <option>tower</option>
+        <option>grave yard</option>
+    </structures>
+    <wildlife>
+        <type>vampire</type>
+        <type>carnivorous</type>
+        <type>dangerous</type>
+        <type>defenseless</type>tended
+        <type>poisonous</type>
+        <type>tame</type>
+        <type>wild</type>
+        <animal group="beds"         >clam</animal>
+        <animal group="beds"         >scorpion</animal>
+        <animal group="bevies"       >quail</animal>
+        <animal group="wiers"        >dragon</animal>
+        <animal group="clouds"       >bat</animal>
+        <animal group="flights"      >cormorant</animal>
+        <animal group="colonies"     >chinchilla</animal>
+        <animal group="clusters"     >spider</animal>
+        <animal group="quivers"      >cobra</animal>
+        <animal group="companies"    >parrot</animal>
+        <animal group="hives"        >bee</animal>
+        <animal group="descents"     >woodpecker</animal>
+        <animal group="mobs"         >kangaroo</animal>
+        <animal group="glarings"     >kitten</animal>
+        <animal group="murders"      >crow</animal>
+        <animal group="musters"      >peacock</animal>
+        <animal group="nests"        >caterpillar</animal>
+        <animal group="parades"      >elephant</animal>
+        <animal group="colonies"     >beaver</animal>
+        <animal group="troops"       >ape</animal>
+    </wildlife>
+    <natural>
+        <age>
+            <option>ancient</option>
+            <option>creepy</option>
+            <option>primal</option>
+            <option>old</option>
+            <option>new</option>
+            <option>fresh</option>
+            <option>magic</option>
+        </age>
+        <type>amber<suffix>
+                <option>deposits</option>
+                <option>mines</option>
+            </suffix>
+        </type>
+        <type>bamboo<suffix>
+                <option>stands</option>
+                <option>patches</option>
+            </suffix>
+        </type>
+        <type>berry<suffix>
+                <option>fields</option>
+                <option>patches</option>
+            </suffix>
+        </type>
+        <type>clay<suffix>
+                <option>deposits</option>
+                <option>banks</option>
+            </suffix>
+        </type>
+        <type>cocoa bean<suffix>
+                <option>fields</option>
+                <option>plantations</option>
+            </suffix>
+        </type>
+        <type>coconut<suffix>
+                <option>plantations</option>
+                <option>harvests</option>
+            </suffix>
+        </type>
+        <type>coffee<suffix>
+                <option>fields</option>
+                <option>patches</option>
+            </suffix>
+        </type>
+        <type>cork<suffix>
+                <option>trees</option>
+                <option>bushes</option>
+            </suffix>
+        </type>
+        <type>fruit<suffix>
+                <option>plantations</option>
+                <option>fields</option>
+            </suffix>
+        </type>
+        <type>guano<suffix>
+                <option>deposits</option>
+                <option>banks</option>
+            </suffix>
+        </type>
+        <type>hemp<suffix>
+                <option>bales</option>
+                <option>fields</option>
+            </suffix>
+        </type>
+        <type>palm oil<suffix>
+                <option>trees</option>
+                <option>harvests</option>
+            </suffix>
+        </type>
+        <type>peat<suffix>
+                <option>bogs</option>
+                <option>swamps</option>
+            </suffix>
+        </type>
+        <type>rubber<suffix>
+                <option>trees</option>
+                <option>plantations</option>
+            </suffix>
+        </type>
+        <type>pigment<suffix>
+                <option>deposits</option>
+                <option>banks</option>
+            </suffix>
+        </type>
+        <type>rock salt<suffix>
+                <option>deposits</option>
+                <option>fields</option>
+            </suffix>
+        </type>
+        <type>timber<suffix>
+                <option>forests</option>
+                <option>plantations</option>
+            </suffix>
+        </type>
+        <type>vegetable<suffix>
+                <option>patches</option>
+                <option>fields</option>
+            </suffix>
+        </type>
+    </natural>
+</data>

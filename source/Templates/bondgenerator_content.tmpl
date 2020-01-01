@@ -1,0 +1,10 @@
+            <section id="bonds">
+                <h2>Bonds</h2>
+                Here's how you know others:
+                <ul>
+                [%  FOREACH bond IN bonds %]
+                    <li>[% bond.template %]</li>
+                [%  END %]
+                </ul>
+            </section>
+

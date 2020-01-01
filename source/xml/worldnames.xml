@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+CityGenerator Data and Templates by Jesse Morgan (morgajel) is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
+Based on a work at https://github.com/morgajel/CityGenerator.
+-->
+
+<data root_chance='30' title_chance='10'>
+    <pre>Mer</pre>
+    <pre>Ven</pre>
+    <pre>Ea</pre>
+    <pre>Ma</pre>
+    <pre>Sat</pre>
+    <pre>Jup</pre>
+    <pre>Urn</pre>
+    <pre>Nep</pre>
+    <pre>Plu</pre>
+    <pre>Vul</pre>
+    <pre>Kli</pre>
+
+    <root>bah</root>
+    <root>ket</root>
+    <root>a</root>
+    <root>i</root>
+    <root>cur</root>
+    <root>lax</root>
+    <root>ng</root>
+
+    <post>ry</post>
+    <post>nus</post>
+    <post>rth</post>
+    <post>rs</post>
+    <post>rn</post>
+    <post>ter</post>
+    <post>us</post>
+    <post>une</post>
+    <post>to</post>
+    <post>on</post>
+    <post>can</post>
+
+</data>
+

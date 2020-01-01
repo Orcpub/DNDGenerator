@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    image: dndgenerator:latest
+    build: .
+    container_name: dndgenerator
+    restart: always
+    ports:
+      - 80:80

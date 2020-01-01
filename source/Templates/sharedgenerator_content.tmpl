@@ -1,0 +1,10 @@
+            <section id="[%section%]">
+                <h2>[%sectionname%]</h2>
+                [%sectionintro%]
+                <ul>
+                [%  FOREACH item IN items %]
+                    <li>[% item.template %]</li>
+                [%  END %]
+                </ul>
+            </section>
+            
