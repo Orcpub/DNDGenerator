@@ -61,7 +61,7 @@ sub print_page {
     }) || die "$Template::ERROR\n";
 
     my $vars = {
-        'doctitle'         => 'Critter Generator - Beware the '.$critter->{'name'},
+        'doctitle'         => 'Critter Generator',
         'title'         => 'Beware the '.$critter->{'name'}, 
         'seed'          => $critter->{'seed'},
         'content'       => print_content($critter),

@@ -63,8 +63,8 @@ sub print_page {
     }) || die "$Template::ERROR\n";
 
     my $vars = {
-        'doctitle'         => 'Bond Generator - The Ties That Bind Us...',# ('.$bonds->[0]->{'seed'}.")",
-        'title'         => 'The Ties That Bind Us...',# ('.$bonds->[0]->{'seed'}.")",
+        'doctitle'         => 'Bond Generator',
+        'title'         => 'The Ties That Bind Us...',
 
         'content'       => print_content($bonds),
     };

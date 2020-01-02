@@ -63,8 +63,8 @@ sub print_page {
     }) || die "$Template::ERROR\n";
 
     my $vars = {
-        'doctitle'         => "Cuisine Generator - Cuisines of the region($seed)",
-        'title'         => "Cuisines of the region",
+        'doctitle'         => 'Cuisine Generator',
+        'title'         => 'Cuisines of the region',
 
         'content'       => print_content($cuisines),
     };

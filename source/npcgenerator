@@ -74,7 +74,7 @@ sub print_page {
     }) || die "$Template::ERROR\n";
 
     my $vars = {
-        'doctitle'         => 'NPC Generator - Meet '.$npc->{'name'}."!",
+        'doctitle'         => 'NPC Generator',
         'title'         => 'Meet '.$npc->{'name'}."!",
         'seed'          => $npc->{'seed'},
         'content'       => print_content($npc),

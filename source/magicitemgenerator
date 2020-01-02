@@ -62,8 +62,8 @@ sub print_page {
     }) || die "$Template::ERROR\n";
 
     my $vars = {
-        'doctitle'         => 'Magic Item Generator - Behold, '.A($item->{'name'})."!", # ($item->{'seed'})",
-        'title'         => 'Behold, '.A($item->{'name'})."!", # ($item->{'seed'})",
+        'doctitle'         => 'Magic Item Generator',
+        'title'         => 'Behold, '.A($item->{'name'})."!",
         'seed'          => $item->{'seed'},
         'content'       => print_content($item),
     };

@@ -63,9 +63,8 @@ sub print_page {
     }) || die "$Template::ERROR\n";
 
     my $vars = {
-        'doctitle'         => 'Random Job board generator - HELP WANTED!', # ('.$postings->[0]->{'seed'}.")",
-        'title'         => 'HELP WANTED!', # ('.$postings->[0]->{'seed'}.")",
-
+        'doctitle'         => 'Random Job board generator',
+        'title'         => 'HELP WANTED!',
         'content'       => print_content($postings),
     };
     return $templates->process('base.tmpl', $vars) || die $templates->error(), "\n";

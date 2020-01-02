@@ -63,7 +63,7 @@ sub print_page {
     }) || die "$Template::ERROR\n";
 
     my $vars = {
-        'doctitle'         => 'Resource Generator - Nearby Resources ('.$resources->[0]->{'seed'}.")",
+        'doctitle'         => 'Resource Generator',
         'title'         => 'So you\'re looking for...',
 
         'content'       => print_content($resources),

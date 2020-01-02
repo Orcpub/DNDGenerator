@@ -126,11 +126,11 @@ html, body, #app {
 }
 
 #worlddata, #censusdata{
-    width:230px;
+    width:250px;
     border:1px solid black;
     float:left;
     margin:0px 10px 0px 0px;
-    padding: 0px ;
+    padding: 10px 10px 10px 10px ;
 }
 #worlddata h2, #censusdata h2{
     margin:0px;

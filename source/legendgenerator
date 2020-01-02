@@ -66,8 +66,8 @@ sub print_page {
     }) || die "$Template::ERROR\n";
 
     my $vars = {
-        'doctitle'         => "Legend Generator - That reminds me of a story...", # ($seed)",
-        'title'         => "That reminds me of a story...", # ($seed)",
+        'doctitle'         => "Legend Generator",
+        'title'         => "That reminds me of a story...",
 
         'content'       => print_content($legends),
     };

@@ -63,8 +63,8 @@ sub print_page {
     }) || die "$Template::ERROR\n";
 
     my $vars = {
-        'doctitle'         => 'Rumor Generator - PSST, Did You hear?',# ('.$rumors->[0]->{'seed'}.")",
-        'title'         => 'PSST, Did You hear?',# ('.$rumors->[0]->{'seed'}.")",
+        'doctitle'         => 'Rumor Generator',
+        'title'         => 'PSST, Did You hear?',
 
         'content'       => print_content($rumors),
     };

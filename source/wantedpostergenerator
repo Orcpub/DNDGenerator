@@ -60,7 +60,7 @@ sub print_page {
 
     my $vars = {
         'doctitle'         => 'Wanted Poster Generator',
-        #'title'         => 'Most Wanted', # ('.$wantedposter->{'seed'}.")",
+        #'title'         => 'Most Wanted',
 
         'content'       => print_content($wantedposter),
     };

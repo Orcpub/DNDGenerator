@@ -66,7 +66,7 @@ sub print_page {
     $JSON->convert_blessed(1);
     my $json=$JSON->encode($flag);
     my $vars = {
-        'doctitle'         => 'Flag Generator - Flag '.$flag->{'seed'}."!",
+        'doctitle'         => 'Flag Generator',
         'title'         => 'Flag '.$flag->{'seed'}."!",
 
         'seed'          => $flag->{'seed'},

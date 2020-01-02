@@ -61,8 +61,8 @@ sub print_page {
     }) || die "$Template::ERROR\n";
 
     my $vars = {
-        'doctitle'         => 'Deity Generator - Tremble Before '.$deity->{'firstname'}."!", # ($deity->{'seed'})",
-        'title'         => 'Tremble Before '.$deity->{'firstname'}."!", # ($deity->{'seed'})",
+        'doctitle'         => 'Deity Generator',
+        'title'         => 'Tremble Before '.$deity->{'firstname'}."!",
         'seed'          => $deity->{'seed'},
         'content'       => print_content($deity),
     };

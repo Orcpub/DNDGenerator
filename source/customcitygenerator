@@ -20,7 +20,7 @@ print $q->header( 'text/html; charset=utf-8' );
     }) || die "$Template::ERROR\n";
 
     my $vars = {
-        'doctitle'         => "Custom City Generator - Let's Customize a City!",
+        'doctitle'         => "Custom City Generator",
         'title'         => "Let's Customize a City!",
         'content'       => print_content(),
     };
