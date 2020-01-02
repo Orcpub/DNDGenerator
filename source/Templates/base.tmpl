@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" itemscope itemtype="http://schema.org/Article">
+<html style="height:100%" lang="en">
     <head>
       <meta property="og:url">
       <meta content="Dungeon Master&apos;s Vault: [%doctitle%]" property="og:title">
@@ -35,7 +35,8 @@
       </script>
       <noscript><p><img src="//t.lissproductions.com/matomo.php?idsite=7&amp;rec=1" style="border:0;" alt="" /></p></noscript>
     </head>
-    <body onload='[% onload %]'>
+    <body style="margin:0;height:100%;line-height:1" onload='[% onload %]'>
+    <div id="app"><div class="app">
     <div id="page">
     <div id="page_border_left">
     <div id="page_border_right">
@@ -71,19 +72,22 @@
                 <h1>[% title %]</h1>
                 <br style="clear:left"/>
         </header>
-
-         <div id="content">
-[% content %]
-		</div>
+        <hr class="hr-style"/>
+          <div id="content">
+          [% content %]
+		      </div>
+        <hr class="hr-style"/>
         <footer>
-              <hr/>
-				      <sub>[% worldnav %]</br>
+              [% worldnav %]
+				      <sub><br/>
               The purpose is to give a DM a seed for building their own ideas. If things don't make sense, ask the single most important question you can: Why? Try to figure out the conditions that lead to that state. The interesting backstory comes from the DM exercising their imagination.</br>
-              Based on the awesome works of https://github.com/morgajel/CityGenerator : ]]</br>
-              v1.0.0.1 "Exploding Sword" Build 1/1/2020
+              Based on the awesome works of https://github.com/morgajel/CityGenerator : ]</br>
+              v1.0.0.2 "Deflecting Hide Armor" Build 1/1/2020             
               </sub>
         </footer>
         </div>
+    </div>
+    </div>
     </div>
     </div>
 </body>
