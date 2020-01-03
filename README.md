@@ -1,12 +1,12 @@
-#What is DNDGenerator?
+# What is DNDGenerator? #
 
 DNDGenerator is a suite of tools that can help generate a unique campaign setting in seconds. 
 
-#Where did it come From?
+# Where did it come From? #
 Originally forked from https://github.com/CityGenerator/CityGenerator
 We have renamed it to DNDGenerator and now is hosted on www.dungeonmastersvault.com/generate/
 
-#How do I use it?
+# How do I use it? #
 
 Clone this repository into a new directory.
 
