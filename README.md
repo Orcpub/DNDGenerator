@@ -14,7 +14,7 @@ docker-compose build
 
 docker-compose up
 
-Launch http:<host>:80/generator/ to see the site.
+Launch http:// your host :80/generator/ to see the site.
 
 Uses the following CPAN Dependancies:
 
