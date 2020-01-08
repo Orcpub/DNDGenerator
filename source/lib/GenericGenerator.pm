@@ -272,6 +272,32 @@ sub generate_stats {
         my $stat=$xml->{'stats'}->{$statname};
 
         # select one of the stats options.
+        $ds->{'stats'}->{$statname}=d(100) if (!defined $ds->{'stats'}->{$statname} );
+        my $statoption= roll_from_array($ds->{'stats'}->{$statname}, $stat->{'option'});
+        $ds->{$statname."_description"} = $statoption->{'content'} if (!defined $ds->{$statname."_description"});
+		$ds->{$statname."_value"} = $ds->{'stats'}->{$statname} if (!defined $ds->{$statname."_value"});
+    }
+    return $ds;
+}
+
+###############################################################################
+
+=head2 generate_npc_stats()
+
+generate the npc stats and their descriptions from the xml based on 1-24
+
+=cut
+
+###############################################################################
+sub generate_npc_stats {
+    my ($ds, $xml) = @_;
+
+    #Loop through each tag underneath stats- it's important that <stat> does NOT have any attributes
+    foreach my $statname (keys %{ $xml->{'stats'} } ){
+        #Simplify the reference for reading pleasure.
+        my $stat=$xml->{'stats'}->{$statname};
+
+        # select one of the stats options.
         #$ds->{'stats'}->{$statname}=d(100) if (!defined $ds->{'stats'}->{$statname} );
         # insted of 1d(100)  we will use 4d6  npcs.xml has been updated
               

@@ -95,7 +95,7 @@ sub create {
     }
     $npc->{'seed'} = GenericGenerator::set_seed($npc->{'seed'});
 
-    GenericGenerator::generate_stats($npc, $npc_data);
+    GenericGenerator::generate_npc_stats($npc, $npc_data);
     GenericGenerator::select_features($npc,$npc_data);
     
     set_race($npc);
