@@ -355,28 +355,23 @@ a:active {
 	width: 100%;
 	line-height: 3;
 	text-align: center;
-	padding: 0;
-	/* display:inline; */
-	/* left: 50%; */
-	/* transform: translateX(-50%); */
+	padding: 0;	
 }
 #worldnav > nav > a {
-	/* width: 100%; */
 	display: inline-block;
 	font-size: 1em;
 	font-weight: bold;
 	padding: .05em;
-	/*margin: .04em;*/
+	
 }
 
 #worldnav > nav > a:nth-child(1),
-#worldnav > nav > a:nth-child(3){
-    /* width: 20%;*/
+#worldnav > nav > a:nth-child(3){ 
     padding: 1em;
 }
 
 #worldnav > nav > a:nth-child(2){
-/*    width: 50%;*/
+
 }
 
 #page_center > br { clear: both; }
