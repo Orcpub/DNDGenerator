@@ -4,7 +4,7 @@
 }
 body {
   height:100%;
-  line-height:1
+  line-height:1;
   margin: 0;
   padding: 0;
   border: 0;
@@ -149,12 +149,14 @@ html, body, #app {
 }
 #page {
     height: max-content;
-    width:1000px;
+/*    width:1000px;
+*/	width: 99%;
     padding:0px;
     margin:0 auto 0 auto;
     background-image: url('../img/bgtexture.png');
     background-repeat: repeat;
 }
+
 #page_border_left {
     height: max-content;
     padding-left:30px;
@@ -329,4 +331,83 @@ a:active {
     display:none;
 }
 
+/* ============================================= */
+/* ====     quick n dirt responsiveness     ==== */
+/* ============================================= */
 
+@media screen and (max-width: 599px){
+/*media screen start*/
+
+#globalmenubutton {
+	color: white;
+	background-color: #2c1210a1;
+	border: 2px solid #edddcba1;
+	display:inline-block;
+	left: 50%;
+    transform: translateX(-50%);
+}
+
+#globalmenudrawer { position: static; }
+
+#worldnav { float: none; }
+
+#worldnav > nav {
+	width: 100%;
+	line-height: 3;
+	text-align: center;
+	padding: 0;	
+}
+#worldnav > nav > a {
+	display: inline-block;
+	font-size: 1em;
+	font-weight: bold;
+	padding: .05em;
+	
+}
+
+#worldnav > nav > a:nth-child(1),
+#worldnav > nav > a:nth-child(3){ 
+    padding: 1em;
+}
+
+#worldnav > nav > a:nth-child(2){
+
+}
+
+#page_center > br { clear: both; }
+
+/* header.title {} */
+#logo {
+	float: left;
+	width: 100%;
+}
+#flag { 
+	margin-left: 15%;
+	width: 70% !important;
+	clear:both;
+}
+
+header.title h1 {
+	font-size: 2.2em;
+	text-align: center;
+    word-spacing:normal;
+	padding: 0;
+ }
+
+#content canvas#citymap_small,
+#censusdata { 
+	width:100% !important;
+}
+
+.twocolumn {
+	column-count:1;
+    -moz-column-count:1; /* Firefox */
+    -webkit-column-count:1; /* Safari and Chrome */
+}
+
+.twocolumn li {
+	margin-left: 0em;
+}
+
+/*media screen end*/
+)
