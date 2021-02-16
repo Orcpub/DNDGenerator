@@ -6,7 +6,7 @@ DNDGenerator is a suite of tools that can help generate a unique campaign settin
 
 # Where did it come From? #
 Originally forked from https://github.com/CityGenerator/CityGenerator
-We have renamed it to DNDGenerator and now is hosted on www.dungeonmastersvault.com/generate/
+We have renamed it to DNDGenerator and now is hosted on www.dungeonmastersvault.com/generator/citygenerator
 
 # How do I use it? #
 
