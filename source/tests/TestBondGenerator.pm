@@ -25,7 +25,15 @@ subtest 'test create' => sub {
         isnt($bond->{$value}, undef, "ensure $value is set");
     }
 
-    like ($bond->{'template'}, "/you/i", "make sure you is interpolated.");
+    # The contract is that BondGenerator::create leaves a finished sentence behind: every
+    # <template> option in xml/bonds.xml is Template Toolkit text built out of [%person.N%]
+    # and [%other%], so interpolation must consume every directive. Which template a seed
+    # picks is hash-order dependent, so nothing about the wording itself can be asserted -
+    # 2 of the 171 options ("[%person.0%] camped together recently." and "...duel to the
+    # death and both lost.") resolve to the NPC's name with no "you" in it whenever
+    # person.0 is the other person, which is what an earlier /you/i assertion tripped over.
+    ok( defined $bond->{'template'} && length $bond->{'template'}, 'the interpolated template is not empty' );
+    unlike( $bond->{'template'} // '', qr/\[/, 'no template placeholders survive interpolation' );
     
     $bond = BondGenerator::create(
         {

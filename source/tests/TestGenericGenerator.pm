@@ -251,7 +251,7 @@ subtest 'test roll_from_array' => sub {
 subtest 'test select_features' => sub {
 
     GenericGenerator::set_seed(1);
-    my $ds={};
+    my $ds={ 'root_roll'=>100, 'post_roll'=>100, 'trailer_roll'=>50 };
     my $xml={
              'feature'=>{
                             'pre'=>{
@@ -272,12 +272,22 @@ subtest 'test select_features' => sub {
                         }
             };
 
-    GenericGenerator::select_features($ds,$xml);
+    # select_features (lib/GenericGenerator.pm) rolls $ds->{<feature>_roll} = d(100), which
+    # is 1..100 inclusive, for every feature that declares a chance, and emits the feature
+    # only when roll <= chance. The chances in the $xml above are: pre declares none (so it
+    # is always emitted), root chance=100, post chance=1, trailer chance=99.
+    # Which roll each feature gets depends on the order keys(%{ $xml->{feature} }) is walked,
+    # and that order is randomized per process, so the rolls the contract depends on are
+    # pinned here rather than left to the seed: trailer_roll 50 is under chance 99 (feature
+    # emitted) while post_roll 100 is over chance 1 (feature skipped) - both sides of the
+    # chance test - and root_roll 100 sits exactly on chance 100, so the comparison has to
+    # stay inclusive for a chance=100 feature to be emitted on its highest possible roll.
+    GenericGenerator::select_features( $ds, $xml );
 
     isnt( $ds->{'pre'},     undef,  'pre exists' );
-    isnt( $ds->{'root'},    undef,  'root exists' );
-    is( $ds->{'post'},      undef,  'post doesnt' );
-    is( $ds->{'trailer_type'},      'foo',  'foo is set' );
+    isnt( $ds->{'root'},    undef,  'root exists on the roll <= chance boundary' );
+    is( $ds->{'post'},      undef,  'post doesnt: post_roll 100 is over its chance of 1' );
+    is( $ds->{'trailer_type'},      'foo',  'foo is set: trailer_roll 50 is under its chance of 99' );
     GenericGenerator::set_seed(1);
 
     $ds={'post_roll'=>99, 'root'=>'foo', 'trailer_type'=>'bar'};
@@ -285,7 +295,7 @@ subtest 'test select_features' => sub {
     GenericGenerator::select_features($ds,$xml);
     isnt( $ds->{'pre'},     undef,  'pre exists' );
     is( $ds->{'root'},      'foo',  'root exists' );
-    is( $ds->{'post'},      undef,  'post doesnt' );
+    is( $ds->{'post'},      undef,  'post doesnt: post_roll 99 is over its chance of 1' );
     is( $ds->{'trailer_type'},      'bar',  'bar is preset' );
 
     done_testing();
