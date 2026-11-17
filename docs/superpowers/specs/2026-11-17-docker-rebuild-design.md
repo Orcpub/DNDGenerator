@@ -140,6 +140,14 @@ The suite is red on any modern Perl, and it is not a porting bug:
 | `tests/TestCritterFormatter.pm` | 1 assert, description regex | regex assumes one wording; the template + `Lingua::EN::Inflect` produce variants |
 | `tests/TestEventGenerator.pm` | 2 asserts, flaky (`festival`→`war`→`trial`) | same, and varies run to run |
 
+**Scope correction, measured during implementation:** the four flaky files in that table became
+**eight** changes. After those four were fixed, 5 of 30 full-suite runs still failed —
+`tests/TestGenericGenerator.pm:279`, `tests/TestBondGenerator.pm:28`,
+`tests/TestMapJSONFormatter.pm:25`, `tests/TestCityscapeFormatter.pm:69` — all of them the same
+hash-order class, each showing up as a rare single-run failure rather than a standing red assert.
+Those four files changed on the same principle, and the acceptance bar moved from 10 consecutive
+green runs to 30, because ten green runs were reached while the suite still failed 5 of 30.
+
 `srand $seed` in `GenericGenerator::set_seed` fixes the RNG *sequence*, but the number of `rand()`
 calls consumed before a pick depends on the order Perl iterates the hashes `XML::Simple` built from
 `xml/*.xml`, and Perl randomizes hash order per process. That is the 6 outcomes for one seed.

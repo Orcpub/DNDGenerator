@@ -197,7 +197,7 @@ docker images --format '{{.Repository}} {{.Size}}' | grep dndgenerator      # ~2
 curl -s -o /dev/null -w '%{time_total}s %{size_download}B\n' http://localhost/generator/citygenerator
 curl -s -H 'Accept-Encoding: gzip' -o /dev/null -w '%{size_download}B\n' http://localhost/generator/citygenerator
 ```
-Expected: gzip transfer roughly a fifth of the plain size.
+Expected: gzip transfer about 22.5% of the plain size (measured 22.3%–22.9% over ten seeds). Add `?seed=` to both requests: every request generates a new page, so the two byte counts above are of two different pages and the ratio they imply is noise.
 
 - [ ] **Step 10: Verify the gates can fail**
 
@@ -234,6 +234,10 @@ CPAN and was being silently skipped by 'cpan install'."
 - Modify: `source/tests/TestFlagGenerator.pm:70-147`
 - Modify: `source/tests/TestCritterFormatter.pm:21-27`
 - Modify: `source/tests/TestWorldFormatter.pm:30-85`
+- Modify: `source/tests/TestGenericGenerator.pm:279` (same class, found at the 30-run bar)
+- Modify: `source/tests/TestBondGenerator.pm:28` (same class, found at the 30-run bar)
+- Modify: `source/tests/TestMapJSONFormatter.pm:25` (same class, found at the 30-run bar)
+- Modify: `source/tests/TestCityscapeFormatter.pm:69` (same class, found at the 30-run bar)
 - Modify: `runtest.sh`
 - Modify: `Dockerfile` (append the `prove` gate and the post-suite cleanup)
 
@@ -241,7 +245,9 @@ CPAN and was being silently skipped by 'cpan install'."
 - Consumes: Task 1's image (deps + `libtest-exception-perl`, `prove` from the `perl` package).
 - Produces: `docker build .` that also runs the suite; a suite whose result does not change between runs.
 
-**Why the four files change:** `GenericGenerator::set_seed` does `srand $seed`, which fixes the RNG *sequence* but not how many `rand()` calls happen before a pick — that depends on the order Perl iterates the hashes `XML::Simple` built, and Perl randomizes hash order per process. Measured: `EventGenerator::create({seed=>12})` + `select_base` returned six different bases over ten runs. So assertions on specific generated words cannot be re-recorded; assert the contract instead. The three `roll`-pinned cases in `TestWorldFormatter` keep their rolls, because rolls do drive the sentence structure.
+**Why eight files change, not four:** `GenericGenerator::set_seed` does `srand $seed`, which fixes the RNG *sequence* but not how many `rand()` calls happen before a pick — that depends on the order Perl iterates the hashes `XML::Simple` built, and Perl randomizes hash order per process. Measured: `EventGenerator::create({seed=>12})` + `select_base` returned six different bases over ten runs. So assertions on specific generated words cannot be re-recorded; assert the contract instead. The three `roll`-pinned cases in `TestWorldFormatter` keep their rolls, because rolls do drive the sentence structure.
+
+The four files above are only the ones that failed on the first inspection. After they were fixed, 5 of 30 full-suite runs still failed: `TestGenericGenerator.pm:279`, `TestBondGenerator.pm:28`, `TestMapJSONFormatter.pm:25` and `TestCityscapeFormatter.pm:69` — all the same hash-order class, each one visible only as a rare single-run failure. Those four files changed too, and the acceptance bar moved from 10 consecutive green runs to 30.
 
 - [ ] **Step 1: Run the suite and record the failures (red run)**
 
@@ -281,20 +287,20 @@ Ten seeds rather than one: a generator that stopped consuming randomness would p
 
 - [ ] **Step 3: Rewrite the two `TestFlagGenerator.pm` subtests**
 
-`generate_division` picks `division->{name}` from `keys %{ $flag_data->{division}{option} }` and `generate_overlay` likewise from `overlay/option` in `xml/flags.xml`; `side`/`count` come from the chosen option's `feature` entries, so they are only meaningful for a chosen name. Replace `is( $flag->{'division'}->{'name'}, 'diagonal' )` and `is( $flag->{'overlay'}->{'name'}, 'quad' )` / `is( $flag->{'overlay'}->{'side'}, 'sw' )` with membership against the XML, keeping every preset assertion in both subtests:
+`generate_division` picks `division->{name}` from `keys %{ $flag_data->{division}{option} }` and `generate_overlay` likewise from `overlay/option` in `xml/flag.xml`; `side`/`count` come from the chosen option's `feature` entries, so they are only meaningful for a chosen name. Replace `is( $flag->{'division'}->{'name'}, 'diagonal' )` and `is( $flag->{'overlay'}->{'name'}, 'quad' )` / `is( $flag->{'overlay'}->{'side'}, 'sw' )` with membership against the XML, keeping every preset assertion in both subtests:
 
 ```perl
-my $flags = XML::Simple->new->XMLin('xml/flags.xml');
+my $flags = XML::Simple->new->XMLin('xml/flag.xml');
 $flag = FlagGenerator::create( { seed => 41630 } );
 FlagGenerator::generate_division($flag);
 ok( exists $flags->{'division'}->{'option'}{ $flag->{'division'}->{'name'} },
-    'division ' . $flag->{'division'}->{'name'} . ' is one of the divisions in flags.xml' );
+    'division ' . $flag->{'division'}->{'name'} . ' is one of the divisions in flag.xml' );
 ```
 and the same shape for `overlay` against `$flags->{'overlay'}->{'option'}`.
 
 - [ ] **Step 4: Loosen `TestCritterFormatter.pm` `Test Critter Summary`**
 
-The pattern requires a space after the newline (`"...\n Adventurers ..."`) that the formatter never emits, which is why it fails on every run. Keep every word the template guarantees and wildcard only the generated phrases — actual output looks like:
+Two claims in the first draft of this step were wrong, and the pattern it gave fails 400 of 400 runs. First: `printSummary` really does end each sentence with `".\n "` (a newline **plus** a space — see the two `$content.=` lines in `source/lib/CritterFormatter.pm`), so a pattern that omits that trailing space is the thing that never matches. Second: the article is produced by `Lingua::EN::Inflect::A()`, which returns `a` or `an` depending on the generated terror word, so `is a.+` cannot hold; the shipped form is `is an?`. Keep every word the template guarantees and wildcard only the generated phrases — actual output looks like:
 
 ```
 The Dark-crested Rxomd Camel is a cute camel that paralyses its prey and eats it alive.
@@ -302,8 +308,10 @@ Adventurers should be wary of its massive horns, and it's reported unearthly wai
 ```
 
 ```perl
-like( $crittertext,
-    qr/^The .+ is a.+ .+ .+ that .+\.\nAdventurers should be wary of its .+ .+, and it's reported .+\.\n$/ );
+like(
+    $crittertext,
+    qr{^The .+ is an? .+ .+ that .+\.\n Adventurers should be wary of its .+ .+, and it's reported .+\.\n $}
+);
 ```
 Leave `Test Critter Description` and `Test Critter Data` alone; they pass.
 
@@ -325,9 +333,9 @@ Apply the same rule to the other three cases in that subtest: keep `a binary sta
 - [ ] **Step 7: Verify the suite is green and repeatable**
 
 ```bash
-docker run --rm dndgenerator:latest sh -c 'cd /var/www/html/generator && for i in 1 2 3 4 5 6 7 8 9 10; do prove --norc -j9 --exec "perl -T -Ilib -Itests" tests/*.pm > /tmp/s$i.log 2>&1 || echo "run $i FAILED"; done; grep -l "Result: FAIL" /tmp/s*.log; echo "done"'
+docker run --rm dndgenerator:latest sh -c 'cd /var/www/html/generator && for i in $(seq 1 30); do prove --norc -j9 --exec "perl -T -Ilib -Itests" tests/*.pm > /tmp/s$i.log 2>&1 || echo "run $i FAILED"; done; grep -l "Result: FAIL" /tmp/s*.log; echo "done"'
 ```
-Expected: no `run N FAILED`, no filenames printed by `grep -l`, then `done`.
+Expected: no `run N FAILED`, no filenames printed by `grep -l`, then `done`. Thirty runs, not ten: ten consecutive green runs were achieved while the suite still failed 5 of 30 runs, so ten is not a bar that proves repeatability.
 
 - [ ] **Step 8: Add the suite gate to `Dockerfile`, after the Gate 1 block**
 
@@ -367,7 +375,7 @@ git commit -m "test: assert what the generators guarantee instead of recorded ra
 
 srand pins the RNG sequence but not how many rand() calls a generator consumes,
 since the order it walks the XML-derived hashes is randomized per process; one seed
-yielded six different event bases. The four red files now assert membership in the
+yielded six different event bases. The eight red files now assert membership in the
 xml/*.xml option sets, honour preset pass-through, and match the wording the
 formatters actually emit. prove also gets an explicit --exec so it no longer aborts
 the whole run on a handler tie, and the suite now gates the image build."
