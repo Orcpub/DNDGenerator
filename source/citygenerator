@@ -69,7 +69,13 @@ sub parse_presets {
     $presets->{'size_roll'}             = $1 if ( defined $q->param('size_roll')       and $q->param('size_roll')         =~/^(\d+)$/x );
     $presets->{'children'}->{'precent'} = $1 if ( defined $q->param('child_precent')   and $q->param('child_precent')     =~/^(\d+)$/x );
     $presets->{'elderly'}->{'percent'}  = $1 if ( defined $q->param('elderly_percent') and $q->param('elderly_percent')   =~/^(\d+)$/x );
-    $presets->{'name'}                  = $1 if ( defined $q->param('name')            and $q->param('name')              =~/^(.*)$/x );
+    # The character class is the whole defence: the name is echoed into body context
+    # (<h1>, links, <title>) and into the flag JSON inside the single-quoted
+    # onload='create_flag( ... )' attribute on <body>. No apostrophe in the class: a
+    # quote would close that attribute and start a new one (tests/TestCityPageXSS.pm).
+    # A name outside the class is dropped, and CityGenerator::create generates one.
+    # No /x here: under /x, whitespace inside a character class is ignored.
+    $presets->{'name'}                  = $1 if ( defined $q->param('name')            and $q->param('name')              =~ /^([\w\h.,()-]{1,60})$/ );
 
 
     foreach my $stat ( ( 'moral', 'order','education','magic','military','tolerance','economy','authority' ) ){
@@ -89,7 +95,6 @@ sub print_page {
 
     my $templates = Template->new({
         INCLUDE_PATH => 'Templates/',
-        INTERPOLATE  => 1,
     }) || die "$Template::ERROR\n";
     my $JSON  = JSON->new->utf8;
 
@@ -114,7 +119,6 @@ sub print_worldnav {
 
     my $templates = Template->new({
         INCLUDE_PATH => 'Templates/',
-        INTERPOLATE  => 1,
     }) || die "$Template::ERROR\n";
 
     my $formtmpl;
@@ -133,7 +137,6 @@ sub print_content {
 
     my $templates = Template->new({
         INCLUDE_PATH => 'Templates/',
-        INTERPOLATE  => 1,
     }) || die "$Template::ERROR\n";
 
     my $formtmpl;

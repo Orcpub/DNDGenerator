@@ -47,7 +47,7 @@ The suite itself runs on the host, not in the container:
 cd source && bash ../runtest.sh
 ```
 
-That runs the 44 suite files (169 tests) on a Debian/WSL2 host that has the apt packages listed
+That runs the 45 suite files (178 tests) on a Debian/WSL2 host that has the apt packages listed
 in `Dockerfile`. The shipped image deliberately contains no `tests/` — `Dockerfile` deletes it
 after the suite runs there — so the suite also runs at build time, and a red build is diagnosed
 from the build log.
@@ -88,10 +88,15 @@ lines in `cpanfile`, installed by `cpanm --installdeps` in the same layer. `cpan
 `make` are purged inside that layer, so no compiler or build tool ships in the image.
 
 The test suite runs as part of `docker build`, in two gates: every CGI entry point and every
-`lib/*.pm` must compile under taint (`perl -Tc`), then `prove` runs all 44 files in
-`source/tests/` (169 tests). A missing dependency therefore fails the build instead of the
+`lib/*.pm` must compile under taint (`perl -Tc`), then `prove` runs all 45 files in
+`source/tests/` (178 tests). A missing dependency therefore fails the build instead of the
 first page load. After the suite runs, `tests/` and `puppet/` are deleted from the image so
 they cannot be fetched over HTTP.
+
+Taint mode is a compile-time gate, not input validation, and not the XSS defence: `CGI.pm`
+untaints the outgoing header, so user-supplied text reaches the HTML no matter what `-T` is
+set to. The guard is `source/tests/TestCityPageXSS.pm`, which runs the city page as a child
+process and fails if a hostile `?name=` comes back in the output.
 
 The `cpan install ...` one-liner this README used to print was wrong in both directions. It
 named `List::MoreUtils`, `Email::Date::Format` and `Test::Harness`, which no code in this
