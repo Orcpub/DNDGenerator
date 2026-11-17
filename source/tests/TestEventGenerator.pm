@@ -29,14 +29,31 @@ subtest 'test create' => sub {
     done_testing();
 };
 
+# select_base() draws from the keys of the <event> elements in xml/events.xml.
+# srand fixes the sequence of rand() values but not how many of them are consumed
+# before a pick, because that depends on the order Perl walks those keys, and that
+# order is randomized per process. So the contract is membership in the option set,
+# never a specific recorded word.
 subtest 'test select_base' => sub {
     my $event;
+    my $events = XML::Simple->new->XMLin('xml/events.xml');
+
     $event = EventGenerator::create( { 'seed' => 12 } );
     EventGenerator::select_base($event);
 
     is( $event->{'seed'}, 12 );
-    is( $event->{'base'}, 'festival' );
-    is( $event->{'name'}, 'festival' );
+    ok( defined $event->{'base'} && exists $events->{'event'}{ $event->{'base'} },
+        "base '" . ( $event->{'base'} // '' ) . "' is one of the events in events.xml" );
+    is( $event->{'name'}, $event->{'base'}, 'name defaults to the base' );
+
+    # Ten seeds rather than one: a generator that stopped consuming randomness
+    # would pass the single-seed version above.
+    for my $seed ( 1 .. 10 ) {
+        my $e = EventGenerator::create( { 'seed' => $seed } );
+        EventGenerator::select_base($e);
+        ok( defined $e->{'base'} && exists $events->{'event'}{ $e->{'base'} }, "seed $seed base is valid" );
+        is( $e->{'name'}, $e->{'base'}, "seed $seed name defaults to base" );
+    }
 
     $event = EventGenerator::create( { 'seed' => 12, 'base' => 'foo' } );
     EventGenerator::select_base($event);
