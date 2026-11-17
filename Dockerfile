@@ -23,11 +23,17 @@ COPY source /var/www/html/generator/
 COPY docker/apache.conf /etc/apache2/conf-available/dnd.conf
 # git records every file under source/ as 100644, so the exec bit a CGI script needs is
 # missing from a Linux checkout; set it in the image instead of trusting the build host.
-# worldmap and regionmap are CGI entry points too (.htaccess gives them +ExecCGI) even
-# though `use City` still stops them running.
+# Derive the list, do not enumerate it: same predicate as Gate 1, a regular file at the
+# root of the document root whose first two bytes are `#!`. That covers the 17 *generator
+# scripts, worldmap, regionmap (CGI entry points .htaccess gives +ExecCGI to, even though
+# `use City` still stops them running) and genstats (bash, not a page). A new entry point
+# must also be added to the second list: the <Files> stanzas in source/.htaccess.
+# No blanket `COPY --chmod=755`: that marks css, js, images and templates executable too.
 # forward request and error logs to docker log collector: Debian's Apache logs to files
-RUN a2enmod cgid deflate expires headers rewrite && a2enconf dnd \
- && chmod +x /var/www/html/generator/*generator /var/www/html/generator/worldmap /var/www/html/generator/regionmap \
+RUN a2enmod cgid deflate expires headers && a2enconf dnd \
+ && for f in /var/www/html/generator/*; do \
+      if [ -f "$f" ] && head -c2 "$f" | grep -q '#!'; then chmod +x "$f"; fi; \
+    done \
  && ln -sf /dev/stdout /var/log/apache2/access.log && ln -sf /dev/stderr /var/log/apache2/error.log
 
 # Gate 1: everything compiles under taint. worldmap/regionmap are excluded: they
