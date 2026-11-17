@@ -1,9 +1,8 @@
-version: '3'
 services:
   web:
     image: dndgenerator:latest
     build: .
     container_name: dndgenerator
-    restart: always
+    restart: unless-stopped
     ports:
       - 80:80
