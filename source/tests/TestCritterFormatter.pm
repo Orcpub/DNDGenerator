@@ -21,7 +21,18 @@ use base qw(Exporter);
 subtest 'Test Critter Summary' => sub {
     my $critter = CritterGenerator::create( { seed => 1 } );
     my $crittertext = CritterFormatter::printSummary($critter);
-    like($crittertext,"/The .+ is a.+ .+ .+ that .+.\n Adventurers should be wary of its .+ .+, and it's reported .+.\n /");
+    # printSummary() emits exactly two sentences, "The <name> is <a|an> <terror>
+    # <basecritter> that <diet>." and "Adventurers should be wary of its <attacktype>
+    # <attack>, and it's reported <ability>.", and it ends every one of them with
+    # "\n " (a newline plus a space), so the trailing "\n " is part of the contract.
+    # The article comes from Lingua::EN::Inflect::A(), which returns "a" or "an"
+    # depending on the terror word, so only "an?" is required here. Name, terror,
+    # basecritter, diet, attacktype, attack and ability are all generated, and the
+    # generated phrases run to a random number of words, so those are the wildcards.
+    like(
+        $crittertext,
+        qr{^The .+ is an? .+ .+ that .+\.\n Adventurers should be wary of its .+ .+, and it's reported .+\.\n $}
+    );
     done_testing();
 };
 

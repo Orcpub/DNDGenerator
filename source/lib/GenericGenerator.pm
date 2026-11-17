@@ -33,7 +33,6 @@ use POSIX;
 use Template;
 use version;
 use Carp qw(longmess);
-use Games::Dice::Roll20;
 ###############################################################################
 
 =head1 CONFIGURATION AND ENVIRONMENT

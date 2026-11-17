@@ -66,10 +66,32 @@ subtest 'Test Cityscape districts' => sub {
     my $city = CityGenerator::create( { seed => 1 } );
     CityGenerator::flesh_out_city($city);
     my $cityscape = CityscapeFormatter::printDistricts($city);
-    like( $cityscape, 
-        "/The city is broken into the following districts: .+, and .+\./",
-        "ensure district is printed"
-     );
+
+    # generate_districts (lib/CityGenerator.pm) takes each <option> in xml/districts.xml by
+    # chance, and how many rolls it spends before reaching an option depends on the order
+    # that hash is walked, so the district count of a seed is not fixed (measured 5 or 6 for
+    # seed 1 over 120 processes, but a 2 district city is legal output). printDistricts
+    # joins the names with Lingua::EN::Inflect::conjunction(), which uses serial commas only
+    # for three or more names, so the previous ": .+, and .+\." pattern silently required a
+    # 3+ district city. Match the frame printDistricts guarantees for the districts this
+    # city actually has, then check the names it emitted.
+    my @districts = sort keys %{ $city->{'districts'} };
+    if ( @districts > 1 ) {
+        like(
+            $cityscape,
+            qr/^The city is broken into the following districts: .+ and .+\. \n$/,
+            scalar(@districts) . " districts are joined into one sentence"
+        );
+        my ($listed) = $cityscape =~ /^The city is broken into the following districts: (.+)\. \n$/;
+        my @names = split /,\s+and\s+|,\s+|\s+and\s+/, $listed // '';
+        ok( !( grep { !length } @names ), 'no empty district name is listed' );
+        is_deeply( [sort @names], \@districts, 'the sentence lists exactly the city districts' );
+    } elsif ( @districts == 1 ) {
+        like( $cityscape, qr/^The city includes an? \Q$districts[0]\E district\. \n$/,
+            'a single district is named in the singular frame' );
+    } else {
+        is( $cityscape, "There are no defined districts in this city. \n", 'no districts says so' );
+    }
 
     $city->{'districts'} ={'foo'=>{},};
     $cityscape = CityscapeFormatter::printDistricts($city);

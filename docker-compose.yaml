@@ -1,9 +1,14 @@
-version: '3'
 services:
   web:
     image: dndgenerator:latest
     build: .
     container_name: dndgenerator
-    restart: always
+    restart: unless-stopped
     ports:
       - 80:80
+    # the healthcheck writes an access-log line every 60s, forever; json-file is unbounded
+    # until you bound it. This is the block README recommends.
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"

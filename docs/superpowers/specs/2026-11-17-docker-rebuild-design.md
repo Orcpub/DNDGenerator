@@ -21,7 +21,10 @@ Perl CGI, never PHP.
 | Same seed, same call, 10 runs | `EventGenerator::create({seed=>12})` + `select_base` returned 6 different bases: celebration, disaster, festival, hunt, raid, war |
 
 Spike on `debian:trixie-slim` (throwaway, `/tmp/spike`, no repo changes): 17 of 19 generators
-return 200, 255 MB image, 0.13–0.45 s per page, gzip 51 KB page → 10 KB.
+return 200, 255 MB image, 0.13–0.45 s per page, gzip 51 KB page → 10 KB — every figure and claim in this
+paragraph and in the decisions and link list below it is a spike-era measurement, superseded by
+the implementation record in README: 19 smoke checks return 200, the image is 248 MB, and a seeded
+city page transfers 22.5% of its plain size.
 
 ## Goals
 
@@ -139,6 +142,14 @@ The suite is red on any modern Perl, and it is not a porting bug:
 | `tests/TestWorldFormatter.pm` | 1 assert, sky summary | same |
 | `tests/TestCritterFormatter.pm` | 1 assert, description regex | regex assumes one wording; the template + `Lingua::EN::Inflect` produce variants |
 | `tests/TestEventGenerator.pm` | 2 asserts, flaky (`festival`→`war`→`trial`) | same, and varies run to run |
+
+**Scope correction, measured during implementation:** the four flaky files in that table became
+**eight** changes. After those four were fixed, 5 of 30 full-suite runs still failed —
+`tests/TestGenericGenerator.pm:279`, `tests/TestBondGenerator.pm:28`,
+`tests/TestMapJSONFormatter.pm:25`, `tests/TestCityscapeFormatter.pm:69` — all of them the same
+hash-order class, each showing up as a rare single-run failure rather than a standing red assert.
+Those four files changed on the same principle, and the acceptance bar moved from 10 consecutive
+green runs to 30, because ten green runs were reached while the suite still failed 5 of 30.
 
 `srand $seed` in `GenericGenerator::set_seed` fixes the RNG *sequence*, but the number of `rand()`
 calls consumed before a pick depends on the order Perl iterates the hashes `XML::Simple` built from
