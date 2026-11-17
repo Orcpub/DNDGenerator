@@ -22,6 +22,22 @@ sub flag_data {
     return XML::Simple->new->XMLin( 'xml/flag.xml', ForceContent => 1, ForceArray => ['option'] );
 }
 
+# Does flag.xml list any <option> for that feature of that option? Division
+# 'none'/'quads'/'diagquads' carry no <feature> at all, and 'diagonal' declares only
+# 'direction', so side/count are legitimately undefined for those names - which is why
+# the generated-value checks below are conditional on this.
+sub feature_declared {
+    my ( $flags, $section, $option, $feature ) = @_;
+    return 0 if !defined $option;
+    my $options = $flags->{$section}->{'option'};
+    return 0 if !ref $options || !defined $options->{$option};
+    my $features = $options->{$option}->{'feature'};
+    return 0 if !ref $features;
+    my $feature_data = $features->{$feature};
+    return 0 if !ref $feature_data;
+    return scalar @{ $feature_data->{'option'} || [] };
+}
+
 # Was $value one of the <option>s flag.xml lists for that feature of that option?
 # Which option a seed lands on, and in which order select_features() walks the
 # <feature> hash, both depend on hash order; membership is what repeats.
@@ -94,11 +110,24 @@ subtest 'test generate_division' => sub {
 
     $flag = FlagGenerator::create( { 'seed' => 41630 } );
     FlagGenerator::generate_division($flag);
-    ok( defined $flag->{'division'}->{'name'}
-            && exists $flags->{'division'}->{'option'}{ $flag->{'division'}->{'name'} },
-        'division '
-            . ( $flag->{'division'}->{'name'} // '' )
-            . ' is one of the divisions in flag.xml' );
+    my $division_name = $flag->{'division'}->{'name'};
+    ok( defined $division_name && exists $flags->{'division'}->{'option'}{$division_name},
+        'division ' . ( $division_name // '' ) . ' is one of the divisions in flag.xml' );
+
+    # side/count come from the chosen option's <feature> list, so they are checkable
+    # whenever flag.xml declares them for the name this run picked: 'stripes' lists
+    # both. A select_features() regression that emits a value outside that list fails
+    # here, not only on the preset stripes cases.
+    for my $feature (qw( side count )) {
+        ok(
+            !feature_declared( $flags, 'division', $division_name, $feature )
+                || feature_is_from_xml( $flags, 'division', $division_name, $feature,
+                $flag->{'division'}->{$feature} ),
+            'the generated ' . $feature . ' ' . ( $flag->{'division'}->{$feature} // 'undef' )
+                . ' for unpreset division ' . ( $division_name // 'undef' )
+                . ' is one flag.xml lists, or that option declares no ' . $feature
+        );
+    }
 
     $flag = FlagGenerator::create( { 'seed' => 41630, 'division' => { 'name' => 'stripes' } } );
     FlagGenerator::generate_division($flag);
@@ -137,11 +166,22 @@ subtest 'test generate_overlay' => sub {
 
     $flag = FlagGenerator::create( { 'seed' => 41630 } );
     FlagGenerator::generate_overlay($flag);
-    ok( defined $flag->{'overlay'}->{'name'}
-            && exists $flags->{'overlay'}->{'option'}{ $flag->{'overlay'}->{'name'} },
-        'overlay '
-            . ( $flag->{'overlay'}->{'name'} // '' )
-            . ' is one of the overlays in flag.xml' );
+    my $overlay_name = $flag->{'overlay'}->{'name'};
+    ok( defined $overlay_name && exists $flags->{'overlay'}->{'option'}{$overlay_name},
+        'overlay ' . ( $overlay_name // '' ) . ' is one of the overlays in flag.xml' );
+
+    # Same contract as the division case above: overlay 'stripe', 'quad' and 'quaddiag'
+    # declare 'side', 'stripe' and 'rays' declare 'count', the rest declare neither.
+    for my $feature (qw( side count )) {
+        ok(
+            !feature_declared( $flags, 'overlay', $overlay_name, $feature )
+                || feature_is_from_xml( $flags, 'overlay', $overlay_name, $feature,
+                $flag->{'overlay'}->{$feature} ),
+            'the generated ' . $feature . ' ' . ( $flag->{'overlay'}->{$feature} // 'undef' )
+                . ' for unpreset overlay ' . ( $overlay_name // 'undef' )
+                . ' is one flag.xml lists, or that option declares no ' . $feature
+        );
+    }
 
     $flag = FlagGenerator::create( { 'seed' => 41630, 'overlay' => { 'name' => 'stripe' } } );
     FlagGenerator::generate_overlay($flag);

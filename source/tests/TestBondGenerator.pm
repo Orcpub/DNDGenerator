@@ -32,7 +32,9 @@ subtest 'test create' => sub {
     # 2 of the 171 options ("[%person.0%] camped together recently." and "...duel to the
     # death and both lost.") resolve to the NPC's name with no "you" in it whenever
     # person.0 is the other person, which is what an earlier /you/i assertion tripped over.
-    ok( defined $bond->{'template'} && length $bond->{'template'}, 'the interpolated template is not empty' );
+    # Only the unlike() is checked here: all 171 options are literal text after their
+    # directives, so "defined && length" measured green whatever the generator did, and
+    # definedness is already asserted by the foreach above.
     unlike( $bond->{'template'} // '', qr/\[/, 'no template placeholders survive interpolation' );
     
     $bond = BondGenerator::create(
