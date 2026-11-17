@@ -10,7 +10,9 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends \
       apache2 ca-certificates \
       libcgi-pm-perl libclone-perl libjson-perl liblingua-en-inflect-perl \
-      libnumber-format-perl libswitch-perl libtemplate-perl libtest-exception-perl \
+      libnumber-format-perl libswitch-perl libtemplate-perl \
+      # needed by the test gate below
+      libtest-exception-perl \
       libtime-parsedate-perl libtimedate-perl libxml-parser-perl libxml-simple-perl \
       cpanminus make \
  && cpanm --notest --quiet --installdeps /opt/dnd-deps \
@@ -35,6 +37,14 @@ RUN cd /var/www/html/generator \
       case "$f" in *regionmap|*worldmap) continue;; esac; \
       perl -Tc -Ilib -Itests "$f" >/dev/null || exit 1; \
     done
+
+# Gate 2: the test suite. -T and -I are on the command line because taint mode
+# ignores PERL5LIB, and --exec picks a prove handler instead of guessing.
+RUN cd /var/www/html/generator \
+ && prove --norc -j9 --exec "perl -T -Ilib -Itests" tests/*.pm
+
+# The suite has run; test and provisioning files should not be web-served.
+RUN rm -rf /var/www/html/generator/tests /var/www/html/generator/puppet
 
 HEALTHCHECK --interval=1m --timeout=5s --start-period=10s \
   CMD perl -MHTTP::Tiny -e 'exit(HTTP::Tiny->new->get("http://127.0.0.1/generator/")->{status} == 200 ? 0 : 1)'

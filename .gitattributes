@@ -1,0 +1,6 @@
+# Shell scripts and the Dockerfile are read by Linux tools (bash, the Docker parser).
+# A Windows checkout with core.autocrlf=true would otherwise hand them CRLF and bash
+# dies on line 2. Scoped to these two patterns on purpose: a blanket `text=auto` would
+# renormalize every tracked file.
+*.sh text eol=lf
+Dockerfile text eol=lf

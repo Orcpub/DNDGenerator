@@ -26,10 +26,10 @@ else
     echo -n "quick test"
     if [[ -e "$1" ]] ; then
         echo " of $1"
-        prove  --timer --normalize -t -w --norc -s -j9 -l lib/ -v tests/Test${1##lib/}
+        prove  --timer --normalize -t -w --norc -s -j9 -Ilib -Itests --exec "perl -T -Ilib -Itests" -v tests/Test${1##lib/}
     else
         echo
-        prove tests/*.pm --timer --normalize -t -w --norc -s -j9 -l lib/ -v
+        prove tests/*.pm --timer --normalize -t -w --norc -s -j9 -Ilib -Itests --exec "perl -T -Ilib -Itests" -v
     fi
 
 fi
