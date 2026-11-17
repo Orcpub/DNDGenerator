@@ -29,8 +29,12 @@ COPY docker/apache.conf /etc/apache2/conf-available/dnd.conf
 # `use City` still stops them running) and genstats (bash, not a page). A new entry point
 # must also be added to the second list: the <Files> stanzas in source/.htaccess.
 # No blanket `COPY --chmod=755`: that marks css, js, images and templates executable too.
+# Strip exec from every regular file before the loop: a Windows build context marks every
+# file 0755, and the mode in the image must not depend on which host ran the build.
+# Directories keep their mode, so Apache can still traverse the tree.
 # forward request and error logs to docker log collector: Debian's Apache logs to files
 RUN a2enmod cgid deflate expires headers && a2enconf dnd \
+ && find /var/www/html/generator -type f -exec chmod a-x {} + \
  && for f in /var/www/html/generator/*; do \
       if [ -f "$f" ] && head -c2 "$f" | grep -q '#!'; then chmod +x "$f"; fi; \
     done \

@@ -1,7 +1,0 @@
--Ilib -Itests --exec "perl -T -Ilib -Itests"
--j9
--s
---timer
---normalize
--t
--w

@@ -21,7 +21,7 @@ Perl CGI, never PHP.
 | Same seed, same call, 10 runs | `EventGenerator::create({seed=>12})` + `select_base` returned 6 different bases: celebration, disaster, festival, hunt, raid, war |
 
 Spike on `debian:trixie-slim` (throwaway, `/tmp/spike`, no repo changes): 17 of 19 generators
-return 200, 255 MB image, 0.13–0.45 s per page, gzip 51 KB page → 10 KB — every figure in this
+return 200, 255 MB image, 0.13–0.45 s per page, gzip 51 KB page → 10 KB — every figure and claim in this
 paragraph and in the decisions and link list below it is a spike-era measurement, superseded by
 the implementation record in README: 19 smoke checks return 200, the image is 248 MB, and a seeded
 city page transfers 22.5% of its plain size.

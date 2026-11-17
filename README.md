@@ -44,13 +44,13 @@ not land on `/generator/`.
 The suite itself runs on the host, not in the container:
 
 ```
-bash runtest.sh
+cd source && bash ../runtest.sh
 ```
 
 That runs the 44 suite files (169 tests) on a Debian/WSL2 host that has the apt packages listed
 in `Dockerfile`. The shipped image deliberately contains no `tests/` — `Dockerfile` deletes it
 after the suite runs there — so the suite also runs at build time, and a red build is diagnosed
-from the build log, or from `docker logs` for a running container.
+from the build log.
 
 Existing Windows checkouts: the repo normalises `*.sh` and `Dockerfile` to LF (`.gitattributes`),
 so a checkout made before that needs `git add --renormalize .` once, or `bash runtest.sh` dies on
