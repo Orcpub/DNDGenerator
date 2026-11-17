@@ -5,3 +5,4 @@ cover_db/
 *.swp
 .vagrant/
 .superpowers/
+docs/
