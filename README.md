@@ -83,7 +83,7 @@ services:
 # What are the dependencies? #
 
 The runtime dependencies are apt packages, and the list is the `apt-get install` line in
-`Dockerfile`. Seven modules have no Debian package at all; they are the seven `requires`
+`Dockerfile`. Six modules have no Debian package at all; they are the six `requires`
 lines in `cpanfile`, installed by `cpanm --installdeps` in the same layer. `cpanminus` and
 `make` are purged inside that layer, so no compiler or build tool ships in the image.
 
