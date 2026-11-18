@@ -34,6 +34,9 @@ COPY docker/apache.conf /etc/apache2/conf-available/dnd.conf
 # forward request and error logs to docker log collector: Debian's Apache logs to files
 RUN a2enmod cgid deflate expires headers && a2enconf dnd \
  && sed -i 's/^ServerTokens OS$/ServerTokens Prod/; s/^ServerSignature On$/ServerSignature Off/' /etc/apache2/conf-available/security.conf \
+ && sed -i 's/^Listen 80$/Listen 8080/' /etc/apache2/ports.conf \
+ && mkdir -p /var/run/apache2 \
+ && chown -R www-data:www-data /var/log/apache2 /var/run/apache2 \
  && find /var/www/html/generator -type f -exec chmod a-x {} + \
  && for f in /var/www/html/generator/*; do \
       if [ -f "$f" ] && head -c2 "$f" | grep -q '#!'; then chmod +x "$f"; fi; \
@@ -54,8 +57,13 @@ RUN cd /var/www/html/generator \
 # The suite has run; test and provisioning files should not be web-served.
 RUN rm -rf /var/www/html/generator/tests /var/www/html/generator/puppet
 
+# The master process runs as www-data on an unprivileged port: nothing in the image binds
+# port 80, and the pid/log directories are owned by www-data for the same reason. The CMD
+# stays apache2ctl because Debian's envvars sets APACHE_RUN_USER/APACHE_RUN_GROUP and
+# APACHE_PID_FILE, which apache2.conf expands; the bare `apache2` binary does not source it.
 HEALTHCHECK --interval=1m --timeout=5s --start-period=10s \
-  CMD perl -MHTTP::Tiny -e 'exit(HTTP::Tiny->new->get("http://127.0.0.1/generator/")->{status} == 200 ? 0 : 1)'
+  CMD perl -MHTTP::Tiny -e 'exit(HTTP::Tiny->new->get("http://127.0.0.1:8080/generator/")->{status} == 200 ? 0 : 1)'
 
-EXPOSE 80
+EXPOSE 8080
+USER www-data
 CMD ["/usr/sbin/apache2ctl","-D","FOREGROUND"]

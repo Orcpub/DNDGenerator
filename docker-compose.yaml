@@ -5,7 +5,7 @@ services:
     container_name: dndgenerator
     restart: unless-stopped
     ports:
-      - 80:80
+      - 80:8080
     # the healthcheck writes an access-log line every 60s, forever; json-file is unbounded
     # until you bound it. This is the block README recommends.
     logging:

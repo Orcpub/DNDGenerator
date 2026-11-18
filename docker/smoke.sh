@@ -1,7 +1,7 @@
 #!/bin/bash
 # Fetch every page the site links. Usage: docker/smoke.sh http://localhost:8085
 set -u
-BASE="${1:-http://localhost:80}"
+BASE="${1:-http://localhost:8080}"
 body=$(mktemp) || exit 1
 trap 'rm -f "$body"' EXIT
 PAGES=(generator "" generator/citygenerator generator/customcitygenerator generator/npcgenerator \

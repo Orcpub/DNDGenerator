@@ -16,7 +16,10 @@ The site is Perl CGI served by Apache. Everything runs in one container:
 docker compose up --build -d
 ```
 
-Then browse http://localhost/generator/ (port 80, `/` redirects to `/generator/`).
+Then browse http://localhost/generator/ (`/` redirects to `/generator/`). The container
+listens on 8080 — its Apache master runs as `www-data`, which cannot bind a privileged port —
+and `docker-compose.yaml` maps host port 80 to it. Running the image straight, without
+compose, is `docker run -p 8080:8080` and browse http://localhost:8080/generator/.
 
 CGI pages are sent with `Cache-Control: no-store` — they echo part of the request URL, so a
 shared proxy must not keep them — and a request body over 64 KiB is refused with HTTP 413
@@ -38,6 +41,9 @@ docker compose down
 ```
 bash docker/smoke.sh http://localhost:80
 ```
+
+(That URL is the compose mapping; run against a container started with `-p 8080:8080`, the
+script's own default `http://localhost:8080` is the right one.)
 
 That fetches the 19 pages the site links and prints one `ok` line for each. It fails —
 exit code 1 — on any page that is not HTTP 200, on a body under 1000 bytes, on a body
