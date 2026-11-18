@@ -64,6 +64,6 @@ RUN rm -rf /var/www/html/generator/tests /var/www/html/generator/puppet
 HEALTHCHECK --interval=1m --timeout=5s --start-period=10s \
   CMD perl -MHTTP::Tiny -e 'exit(HTTP::Tiny->new->get("http://127.0.0.1:8080/generator/")->{status} == 200 ? 0 : 1)'
 
-EXPOSE 80
+EXPOSE 8080
 USER www-data
 CMD ["/usr/sbin/apache2ctl","-D","FOREGROUND"]
