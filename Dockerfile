@@ -34,6 +34,7 @@ COPY docker/apache.conf /etc/apache2/conf-available/dnd.conf
 # Directories keep their mode, so Apache can still traverse the tree.
 # forward request and error logs to docker log collector: Debian's Apache logs to files
 RUN a2enmod cgid deflate expires headers && a2enconf dnd \
+ && sed -i 's/^ServerTokens OS$/ServerTokens Prod/; s/^ServerSignature On$/ServerSignature Off/' /etc/apache2/conf-available/security.conf \
  && find /var/www/html/generator -type f -exec chmod a-x {} + \
  && for f in /var/www/html/generator/*; do \
       if [ -f "$f" ] && head -c2 "$f" | grep -q '#!'; then chmod +x "$f"; fi; \
