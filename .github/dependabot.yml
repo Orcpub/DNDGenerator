@@ -1,0 +1,12 @@
+version: 2
+updates:
+  # Actions are pinned by commit SHA in docker.yaml, so Dependabot's PR is what moves
+  # them; monthly keeps the noise down and makes each bump a reviewable commit.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }
+  # Debian does not publish an "outdated" report for a pinned base image digest, so this
+  # is how the image's base digest gets bumped.
+  - package-ecosystem: docker
+    directory: /
+    schedule: { interval: monthly }
