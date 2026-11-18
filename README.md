@@ -18,6 +18,11 @@ docker compose up --build -d
 
 Then browse http://localhost/generator/ (port 80, `/` redirects to `/generator/`).
 
+CGI pages are sent with `Cache-Control: no-store` — they echo part of the request URL, so a
+shared proxy must not keep them — and a request body over 64 KiB is refused with HTTP 413
+before any Perl process starts. The cap is there because one unauthenticated 80 MB POST to a
+page was measured peaking at 823 MiB of container memory, against 14 MiB idle.
+
 The `--build` is what makes `up` pick up your changes. Without it, `up` reuses the
 `dndgenerator:latest` image that already exists, so edits to the code, the `Dockerfile`
 or `cpanfile` do nothing.
