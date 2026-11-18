@@ -2,7 +2,6 @@
 
 use strict;
 use CGI;
-use Data::Dumper;
 use JSON;
 use List::Util 'shuffle', 'min', 'max' ;
 use POSIX;
@@ -16,14 +15,14 @@ our $q = CGI->new;
 
 
 my $testcityid=GenericGenerator::set_seed();
-if (defined $q->param('seed')){
-    $testcityid=$q->param('seed');
-}elsif (defined $q->param('cityid')){
-    $testcityid=$q->param('cityid');
-}elsif (defined $q->param('continent')){
-    $testcityid=$q->param('continent').'00';
-}elsif (defined $q->param('region')){
-    $testcityid=$q->param('region').'0';
+if (defined $q->param('seed') and $q->param('seed') =~ /^(\d+)$/){
+    $testcityid=$1;
+}elsif (defined $q->param('cityid') and $q->param('cityid') =~ /^(\d+)$/){
+    $testcityid=$1;
+}elsif (defined $q->param('continent') and $q->param('continent') =~ /^(\d+)$/){
+    $testcityid=$1.'00';
+}elsif (defined $q->param('region') and $q->param('region') =~ /^(\d+)$/){
+    $testcityid=$1.'0';
 }
 
 
@@ -41,9 +40,6 @@ if (defined $q->param('type') and $q->param('type') eq 'xml' ){
     $JSON->convert_blessed(1);
     print  $JSON->encode($flag);
 
-}elsif (defined $q->param('type') and $q->param('type') eq 'dump' ){
-    print $q->header( 'text/plain' );
-    print Dumper $flag;
 }else {
     print $q->header;
     print print_page($flag);

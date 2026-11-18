@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 use CGI;
-use Data::Dumper;
 use JSON;
 use List::Util 'shuffle', 'min', 'max' ;
 use POSIX;
@@ -18,8 +17,8 @@ our $q = CGI->new;
 
 my $worldid=GenericGenerator::set_seed();
 
-if (defined $q->param('worldid')){
-    $worldid=$q->param('worldid');
+if (defined $q->param('worldid') and $q->param('worldid') =~ /^(\d+)$/){
+    $worldid=$1;
 }
 
 my $world=WorldGenerator::create({seed=>$worldid});
@@ -36,10 +35,6 @@ if (defined $q->param('type') and $q->param('type') eq 'xml' ){
     my $JSON  = JSON->new->utf8;
     $JSON->convert_blessed(1);
     print $JSON->encode($world);
-
-} elsif (defined $q->param('type') and $q->param('type') eq 'dump' ){
-    print $q->header( 'text/plain' );
-    print Dumper $world;
 
 } else {
     print $q->header( 'text/html; charset=utf-8' );

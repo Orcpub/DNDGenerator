@@ -16,7 +16,15 @@ The site is Perl CGI served by Apache. Everything runs in one container:
 docker compose up --build -d
 ```
 
-Then browse http://localhost/generator/ (port 80, `/` redirects to `/generator/`).
+Then browse http://localhost/generator/ (`/` redirects to `/generator/`). The container
+listens on 8080 — its Apache master runs as `www-data`, which cannot bind a privileged port —
+and `docker-compose.yaml` maps host port 80 to it. Running the image straight, without
+compose, is `docker run -p 8080:8080` and browse http://localhost:8080/generator/.
+
+CGI pages are sent with `Cache-Control: no-store` — they echo part of the request URL, so a
+shared proxy must not keep them — and a request body over 64 KiB is refused with HTTP 413
+before any Perl process starts. The cap is there because one unauthenticated 80 MB POST to a
+page was measured peaking at 823 MiB of container memory, against 14 MiB idle.
 
 The `--build` is what makes `up` pick up your changes. Without it, `up` reuses the
 `dndgenerator:latest` image that already exists, so edits to the code, the `Dockerfile`
@@ -34,6 +42,9 @@ docker compose down
 bash docker/smoke.sh http://localhost:80
 ```
 
+(That URL is the compose mapping; run against a container started with `-p 8080:8080`, the
+script's own default `http://localhost:8080` is the right one.)
+
 That fetches the 19 pages the site links and prints one `ok` line for each. It fails —
 exit code 1 — on any page that is not HTTP 200, on a body under 1000 bytes, on a body
 containing an error string (`Internal Server Error`, `Can't locate`, `Compilation failed`),
@@ -47,7 +58,7 @@ The suite itself runs on the host, not in the container:
 cd source && bash ../runtest.sh
 ```
 
-That runs the 44 suite files (169 tests) on a Debian/WSL2 host that has the apt packages listed
+That runs the 47 suite files (194 tests) on a Debian/WSL2 host that has the apt packages listed
 in `Dockerfile`. The shipped image deliberately contains no `tests/` — `Dockerfile` deletes it
 after the suite runs there — so the suite also runs at build time, and a red build is diagnosed
 from the build log.
@@ -88,10 +99,15 @@ lines in `cpanfile`, installed by `cpanm --installdeps` in the same layer. `cpan
 `make` are purged inside that layer, so no compiler or build tool ships in the image.
 
 The test suite runs as part of `docker build`, in two gates: every CGI entry point and every
-`lib/*.pm` must compile under taint (`perl -Tc`), then `prove` runs all 44 files in
-`source/tests/` (169 tests). A missing dependency therefore fails the build instead of the
+`lib/*.pm` must compile under taint (`perl -Tc`), then `prove` runs all 47 files in
+`source/tests/` (194 tests). A missing dependency therefore fails the build instead of the
 first page load. After the suite runs, `tests/` and `puppet/` are deleted from the image so
 they cannot be fetched over HTTP.
+
+Taint mode is a compile-time gate, not input validation, and not the XSS defence: `CGI.pm`
+untaints the outgoing header, so user-supplied text reaches the HTML no matter what `-T` is
+set to. The guard is `source/tests/TestCityPageXSS.pm`, which runs the city page as a child
+process and fails if a hostile `?name=` comes back in the output.
 
 The `cpan install ...` one-liner this README used to print was wrong in both directions. It
 named `List::MoreUtils`, `Email::Date::Format` and `Test::Harness`, which no code in this
@@ -120,12 +136,12 @@ curl -s -H 'Accept-Encoding: gzip' -o /dev/null -w '%{size_download}\n' 'http://
 
 # Known issues #
 
-`worldmap` and `regionmap` return HTTP 500. They `use City`, a module that exists in neither
+`worldmap` and `regionmap` are deleted. They `use City`, a module that exists in neither
 this repository nor the upstream `CityGenerator/CityGenerator` it was forked from, so they
-have never run. Neither is linked from the site's Generators menu — the world map is drawn in
-the browser from JSON by `source/js/WorldMap.js` — so normal browsing does not reach them.
-They are excluded from both build gates and from the smoke list. A follow-up could write a
-small `City.pm` over `CityGenerator`, or delete the two scripts.
+had never run: they answered HTTP 500, were excluded from both build gates and from the
+smoke list, and `source/.htaccess` gave them `+ExecCGI` — runnable entry points that only
+ever failed. The map you see in a page is drawn in the browser from JSON by
+`source/js/WorldMap.js`, which is untouched.
 
 `Vagrantfile` and `source/puppet` are the retired pre-Docker provisioning path. They are not
 used by the container, and `source/puppet` is deleted from the image at build time.

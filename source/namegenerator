@@ -2,7 +2,6 @@
 
 use strict;
 use CGI;
-use Data::Dumper;
 use JSON;
 use List::Util 'shuffle', 'min', 'max' ;
 use POSIX;
@@ -30,10 +29,6 @@ if (defined $q->param('type') and $q->param('type') eq 'json' ){
     $results->{'names'}=generate_names();
     print  $JSON->encode($results)."\n";
 
-}elsif (defined $q->param('type') and $q->param('type') eq 'dump' ){
-    print $q->header( 'text/plain' );
-    $results->{'names'}=generate_names();
-    print Dumper $results;
 }else {
     print $q->header;
     print_page();

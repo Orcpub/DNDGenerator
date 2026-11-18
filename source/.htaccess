@@ -4,13 +4,3 @@ DirectoryIndex citygenerator
 	Options +ExecCGI
 	SetHandler cgi-script
 </Files>
-<Files ~ "^.*worldmap$" >
-	Require all granted
-	Options +ExecCGI
-	SetHandler cgi-script
-</Files>
-<Files ~ "^.*regionmap$" >
-	Require all granted
-	Options +ExecCGI
-	SetHandler cgi-script
-</Files>
