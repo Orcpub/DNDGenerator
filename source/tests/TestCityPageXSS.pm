@@ -5,26 +5,15 @@ package TestCityPageXSS;
 
 use strict;
 use warnings;
+use lib 'tests/lib';
+use CGIScript;
 use Test::More;
 
-# The entry points are programs, not modules, so this test runs the real CGI script as
-# a child process and reads the HTML it prints. CGI.pm takes its parameters from
-# REQUEST_METHOD + QUERY_STRING, so no web server is needed. The command line is a
-# literal string, which is what keeps it usable under taint mode.
-#
 # Two live vectors are pinned here, both through the one unvalidated parameter
 # (citygenerator's name): the name reflected raw in body context, and a single quote in
 # the name closing the single-quoted onload='create_flag( <flag JSON> )' attribute on
 # <body> and starting a new attribute.
-sub page {
-    my ($qs) = @_;
-    local $ENV{REQUEST_METHOD} = 'GET';
-    local $ENV{QUERY_STRING}   = $qs;
-    # Taint refuses to fork with a tainted PATH; the child needs only the system perl.
-    local $ENV{PATH}           = '/usr/bin:/bin';
-    my $out = `perl -T -Ilib -Itests citygenerator`;
-    return defined $out ? $out : '';
-}
+sub page { return CGIScript::page( 'citygenerator', @_ ); }
 
 my $angle = page('seed=1&name=%3Cimg%20src%3Dx%20onerror%3Dalert(1)%3E');
 ok( length($angle) > 1000, 'the page rendered' );

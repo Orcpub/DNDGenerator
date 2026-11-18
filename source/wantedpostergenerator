@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 use CGI;
-use Data::Dumper;
 use JSON;
 use List::Util 'shuffle', 'min', 'max' ;
 use POSIX;
@@ -34,10 +33,6 @@ if (defined $q->param('type') and $q->param('type') eq 'xml' ){
     my $JSON  = JSON->new->utf8;
     $JSON->convert_blessed(1);
     print $JSON->encode($wantedposter);
-
-} elsif (defined $q->param('type') and $q->param('type') eq 'dump' ){
-    print $q->header( 'text/plain' );
-    print Dumper $wantedposter;
 
 } else {
     print $q->header( 'text/html; charset=utf-8' );

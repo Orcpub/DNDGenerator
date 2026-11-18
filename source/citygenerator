@@ -2,7 +2,6 @@
 
 use strict;
 use CGI;
-use Data::Dumper;
 use JSON;
 use List::Util 'shuffle', 'min', 'max' ;
 use POSIX;
@@ -43,12 +42,6 @@ if (defined $q->param('type') and $q->param('type') eq 'xml' ){
     $JSON->convert_blessed(1);
     print  $JSON->encode($city);
 
-}elsif (defined $q->param('type') and $q->param('type') eq 'dump' ){
-    print $q->header( 'text/plain' );
-    print Dumper $city;
-}elsif (defined $q->param('type') and $q->param('type') eq 'post' ){
-    print $q->header( 'text/plain' );
-    print Dumper $city_presets;
 }else {
     print $q->header( 'text/html; charset=utf-8' );
     print_page($city);
