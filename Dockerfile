@@ -25,8 +25,7 @@ COPY docker/apache.conf /etc/apache2/conf-available/dnd.conf
 # missing from a Linux checkout; set it in the image instead of trusting the build host.
 # Derive the list, do not enumerate it: same predicate as Gate 1, a regular file at the
 # root of the document root whose first two bytes are `#!`. That covers the 17 *generator
-# scripts, worldmap, regionmap (CGI entry points .htaccess gives +ExecCGI to, even though
-# `use City` still stops them running) and genstats (bash, not a page). A new entry point
+# scripts and genstats (bash, not a page). A new entry point
 # must also be added to the second list: the <Files> stanzas in source/.htaccess.
 # No blanket `COPY --chmod=755`: that marks css, js, images and templates executable too.
 # Strip exec from every regular file before the loop: a Windows build context marks every
@@ -41,11 +40,9 @@ RUN a2enmod cgid deflate expires headers && a2enconf dnd \
     done \
  && ln -sf /dev/stdout /var/log/apache2/access.log && ln -sf /dev/stderr /var/log/apache2/error.log
 
-# Gate 1: everything compiles under taint. worldmap/regionmap are excluded: they
-# `use City`, a module that has never existed in this repo or upstream.
+# Gate 1: everything compiles under taint.
 RUN cd /var/www/html/generator \
  && for f in $(find . -maxdepth 1 -type f | xargs grep -l '^#!/usr/bin/perl') lib/*.pm; do \
-      case "$f" in *regionmap|*worldmap) continue;; esac; \
       perl -Tc -Ilib -Itests "$f" >/dev/null || exit 1; \
     done
 

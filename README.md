@@ -130,12 +130,12 @@ curl -s -H 'Accept-Encoding: gzip' -o /dev/null -w '%{size_download}\n' 'http://
 
 # Known issues #
 
-`worldmap` and `regionmap` return HTTP 500. They `use City`, a module that exists in neither
+`worldmap` and `regionmap` are deleted. They `use City`, a module that exists in neither
 this repository nor the upstream `CityGenerator/CityGenerator` it was forked from, so they
-have never run. Neither is linked from the site's Generators menu — the world map is drawn in
-the browser from JSON by `source/js/WorldMap.js` — so normal browsing does not reach them.
-They are excluded from both build gates and from the smoke list. A follow-up could write a
-small `City.pm` over `CityGenerator`, or delete the two scripts.
+had never run: they answered HTTP 500, were excluded from both build gates and from the
+smoke list, and `source/.htaccess` gave them `+ExecCGI` — runnable entry points that only
+ever failed. The map you see in a page is drawn in the browser from JSON by
+`source/js/WorldMap.js`, which is untouched.
 
 `Vagrantfile` and `source/puppet` are the retired pre-Docker provisioning path. They are not
 used by the container, and `source/puppet` is deleted from the image at build time.
