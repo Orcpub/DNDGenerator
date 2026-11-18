@@ -28,6 +28,8 @@ like( $json, qr/\{\s*"/, 'type=json still returns a JSON object' );
 my $xml = page( 'citygenerator', 'seed=1&type=xml' );
 like( $xml, qr/<\?xml version/, 'type=xml still returns XML' );
 
+like( page( 'citygenerator', 'seed=1&type=nonsense' ), qr{</html>}, 'an unknown type falls through to the page' );
+
 done_testing();
 
 1;

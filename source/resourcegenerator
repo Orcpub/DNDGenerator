@@ -16,8 +16,8 @@ our $q = CGI->new;
 
 my $seed=GenericGenerator::set_seed();
 
-if (defined $q->param('seed')){
-    $seed=$q->param('seed');
+if (defined $q->param('seed') and $q->param('seed') =~ /^(\d+)$/){
+    $seed=$1;
 }
 
 my $resources;

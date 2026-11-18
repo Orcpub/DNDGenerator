@@ -68,7 +68,7 @@ sub parse_presets {
     # quote would close that attribute and start a new one (tests/TestCityPageXSS.pm).
     # A name outside the class is dropped, and CityGenerator::create generates one.
     # No /x here: under /x, whitespace inside a character class is ignored.
-    $presets->{'name'}                  = $1 if ( defined $q->param('name')            and $q->param('name')              =~ /^([\w\h.,()-]{1,60})$/ );
+    $presets->{'name'}                  = $1 if ( defined $q->param('name')            and $q->param('name')              =~ /^([\w.,()-][\w\h.,()-]{0,59})$/ );
 
 
     foreach my $stat ( ( 'moral', 'order','education','magic','military','tolerance','economy','authority' ) ){

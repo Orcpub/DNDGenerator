@@ -33,7 +33,9 @@ my $huge = page( 'seed=1&name=' . ( 'A' x 4000 ) );
 ok( length($huge) > 1000, 'a 4000-byte name still renders a page' );
 unlike( $huge, qr/A{100}/, 'an over-long name is dropped, not reflected' );
 
-unlike( page('seed=1&name=Bj%C3%B6rn'), qr/Bj/, 'a non-ASCII name is dropped, not reflected' );
+unlike( page('seed=1&name=Bj%C3%B6rn'), qr/Bj\xC3%B6rn/, 'a non-ASCII name is dropped, not reflected' );
+ok( length( page('seed=1&name=') ) > 1000, 'an empty name still renders a page' );
+unlike( page('seed=1&name=%20%20'), qr{<h1>Welcome to[ ]+</h1>}, 'a spaces-only name falls back to a generated name' );
 
 done_testing();
 

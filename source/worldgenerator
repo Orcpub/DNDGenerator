@@ -17,8 +17,8 @@ our $q = CGI->new;
 
 my $worldid=GenericGenerator::set_seed();
 
-if (defined $q->param('worldid')){
-    $worldid=$q->param('worldid');
+if (defined $q->param('worldid') and $q->param('worldid') =~ /^(\d+)$/){
+    $worldid=$1;
 }
 
 my $world=WorldGenerator::create({seed=>$worldid});
